@@ -22,9 +22,15 @@ export class TranslationService {
 
   setLanguage(lang: string) {
     this.currentLang = lang;
+    this.updateBodyClass();
   }
 
   translate(key: string): string {
     return this.translations[this.currentLang][key] || key;
+  }
+  private updateBodyClass() {
+    const body = document.body;
+    body.classList.remove('en', 'ge');
+    body.classList.add(this.currentLang);
   }
 }

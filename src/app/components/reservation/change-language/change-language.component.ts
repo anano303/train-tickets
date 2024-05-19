@@ -13,5 +13,6 @@ export class ChangeLanguageComponent {
   constructor(private translationService: TranslationService) {}
   changeLanguage(lang: string) {
     this.translationService.setLanguage(lang);
+    console.log('Language changed to:', lang);
   }
 }
