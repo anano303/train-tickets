@@ -1,0 +1,52 @@
+// .home {
+//   position: relative;
+// }
+.home-main {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 80px;
+  background: url("https://s.yimg.com/uu/api/res/1.2/aAc7HVnQWVH.xqllcygELg--~B/aD0yMzM4O3c9NDE1NjtzbT0xO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/pa_viral_news_uk_120/fddc3d374c6eb71f6d9b03e2d0a64b12");
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  .welcome-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 100px 0;
+    .welcome-section-body {
+      width: 100%;
+      padding: 50px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      h3 {
+        color: #fff;
+        text-shadow: 0px 0px 1px hsl(0, 0%, 100%);
+        font-size: 36px;
+        font-weight: 800;
+        text-shadow: 0px 0px 5px #000;
+        letter-spacing: 0.5px;
+      }
+      p {
+        color: #fff;
+        font-size: 25px;
+        font-weight: 600;
+        text-shadow: 0px 0px 5px #000;
+        letter-spacing: 0.3px;
+      }
+    }
+  }
+
+  .section-reservation {
+    width: 100%;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid #cacaca;
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px #cacaca;
+  }
+}

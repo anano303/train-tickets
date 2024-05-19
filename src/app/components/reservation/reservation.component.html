@@ -1,0 +1,28 @@
+<div class="reservation-form">
+  <div class="form-container">
+    <h3>Book a train ticket</h3>
+    <form action="" (ngSubmit)="onSubmit()">
+      <div class="from-where">
+        <select>
+          <option value="">From where</option>
+          <option *ngFor="let station of stations" [value]="station.stationNumber">{{station.name}}</option>
+        </select>
+      </div>
+      <div class="where">
+        <select>
+          <option value="">Where</option>
+          <option *ngFor="let station of stations" [value]="station.stationNumber">{{station.name}}</option>
+        </select>
+      </div>
+      <div class="departure-date">
+        <input type="date">
+      </div>
+      <div class="passenger-number">
+        <input type="number" placeholder="Number of people">
+      </div>
+      <div class="btn">
+        <button type="submit">Find a train</button>
+      </div>
+    </form>
+  </div>
+</div>

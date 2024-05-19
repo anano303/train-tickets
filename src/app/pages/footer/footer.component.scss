@@ -1,0 +1,31 @@
+.footer {
+  // width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  background-color: #12074f;
+  .footer-left {
+    p {
+      color: rgb(197, 233, 131);
+      letter-spacing: 0.3px;
+      font-size: 22px;
+    }
+  }
+  .footer-right {
+    display: flex;
+    width: 200px;
+    justify-content: space-around;
+    align-items: center;
+    a {
+      text-decoration: none;
+      cursor: pointer;
+      img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+}
