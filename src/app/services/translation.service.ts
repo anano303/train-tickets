@@ -9,9 +9,14 @@ export class TranslationService {
   private translations: any = {
     en: {
       RAILWAY: 'TrainRailway',
+      WELCOMEH: 'Buy train tickets online',
+      WELCOMEP: 'Wish you a happy journay',
     },
+
     ge: {
       RAILWAY: 'მატარებლის სადგური',
+      WELCOMEH: 'შეიძინეთ მატარებლის ბილეთები ონლაინ',
+      WELCOMEP: 'ბედნიერ მგზავრობას გისურვებთ!',
     },
   };
 

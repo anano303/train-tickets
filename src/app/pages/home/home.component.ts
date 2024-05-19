@@ -2,21 +2,32 @@ import { Component } from '@angular/core';
 import { ReservationComponent } from '../../components/reservation/reservation.component';
 import { DecorationComponent } from '../../shared/decoration/decoration.component';
 import { StationService } from '../../services/station.service';
-import { IStation } from '../../models/station.model';
+import { TranslationService } from '../../services/translation.service';
+import { TranslatePipe } from '../../translate.pipe';
+import { ChangeLanguageComponent } from '../../components/reservation/change-language/change-language.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ReservationComponent, DecorationComponent],
+  imports: [ReservationComponent, DecorationComponent, TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   stations: any = [];
-  constructor(private stationService: StationService) {}
+
+  constructor(
+    private stationService: StationService,
+    private translationService: TranslationService
+  ) {}
   ngOnInit(): void {}
   getStations(): void {
     this.stationService
       .getStations()
       .subscribe((stations) => (this.stations = stations));
+  }
+
+  changeLanguage(lang: string) {
+    this.translationService.setLanguage(lang);
   }
 }
