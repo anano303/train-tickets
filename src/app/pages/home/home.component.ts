@@ -5,11 +5,17 @@ import { StationService } from '../../services/station.service';
 import { TranslationService } from '../../services/translation.service';
 import { TranslatePipe } from '../../translate.pipe';
 import { ChangeLanguageComponent } from '../../components/reservation/change-language/change-language.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ReservationComponent, DecorationComponent, TranslatePipe],
+  imports: [
+    ReservationComponent,
+    DecorationComponent,
+    TranslatePipe,
+    RouterOutlet,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

@@ -9,7 +9,6 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { FindTrainsComponent } from '../../pages/find-trains/find-trains.component';
 
 @Component({
   selector: 'app-reservation',
