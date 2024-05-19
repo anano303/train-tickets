@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { IStation } from '../../models/station.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { StationService } from '../../services/station.service';
 
 @Component({
   selector: 'app-reservation',
@@ -15,5 +16,5 @@ export class ReservationComponent {
     console.log('reserved');
   }
 
-  @Input() stations: any = [];
+  @Input() stations: IStation[] = [];
 }

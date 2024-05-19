@@ -10,11 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './change-language.component.scss',
 })
 export class ChangeLanguageComponent {
-
   constructor(private translationService: TranslationService) {}
   changeLanguage(lang: string) {
     this.translationService.setLanguage(lang);
-
-    console.log('click');
   }
 }
