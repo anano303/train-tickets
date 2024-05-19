@@ -21,8 +21,11 @@
         <input type="number" placeholder="Number of people">
       </div>
       <div class="btn">
-        <button type="submit">Find a train</button>
+        <button type="submit"> <a routerLink="/trains" routerLinkActive="active" ariaCurrentWhenActive="page">Find a
+            train</a> </button>
       </div>
     </form>
   </div>
 </div>
+
+<router-outlet></router-outlet>
