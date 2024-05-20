@@ -2,11 +2,18 @@ import { Component } from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
 import { TranslatePipe } from '../../translate.pipe';
 import { ChangeLanguageComponent } from '../../components/change-language/change-language.component';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TranslatePipe, ChangeLanguageComponent],
+  imports: [
+    TranslatePipe,
+    ChangeLanguageComponent,
+    RouterOutlet,
+    RouterLinkActive,
+    RouterLink,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

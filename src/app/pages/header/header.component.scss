@@ -9,11 +9,17 @@
 
   .header-left {
     cursor: pointer;
-    h1 {
-      font-size: 40px;
-      color: rgb(197, 233, 131);
-      font-weight: 900;
-      letter-spacing: 1px;
+    a {
+      display: inline-block;
+      perspective: 1000px;
+      img {
+        width: 200px;
+        height: auto;
+        transition: transform 0.3s ease;
+        &:hover {
+          transform: translateZ(80px);
+        }
+      }
     }
   }
   .header-right {
@@ -22,14 +28,15 @@
     button {
       font-size: 20px;
       padding: 10px 15px;
-      background-color: yellow;
+      background-color: #9999ff;
       color: black;
       border: none;
       border-radius: 10px;
       align-self: center;
       cursor: pointer;
+      transition: background-color 0.3s ease;
       &:hover {
-        background-color: yellowgreen;
+        background-color: #c0dfff;
         transition: 0.5s;
         transform: translateY(-5px);
       }
@@ -40,5 +47,10 @@
 @media screen and (max-width: 520px) {
   .header {
     flex-direction: column;
+    .header-left {
+      img {
+        width: 150px;
+      }
+    }
   }
 }
