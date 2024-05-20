@@ -4,7 +4,7 @@ import { DecorationComponent } from '../../shared/decoration/decoration.componen
 import { StationService } from '../../services/station.service';
 import { TranslationService } from '../../services/translation.service';
 import { TranslatePipe } from '../../translate.pipe';
-import { ChangeLanguageComponent } from '../../components/reservation/change-language/change-language.component';
+import { ChangeLanguageComponent } from '../../components/change-language/change-language.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

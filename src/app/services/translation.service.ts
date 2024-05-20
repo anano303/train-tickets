@@ -24,6 +24,9 @@ export class TranslationService {
     this.currentLang = lang;
     this.updateBodyClass();
   }
+  getCurrentLang(): string {
+    return this.currentLang;
+  }
 
   translate(key: string): string {
     return this.translations[this.currentLang][key] || key;

@@ -1,0 +1,12 @@
+<!-- language-switcher.component.html -->
+<div class="change-lang">
+
+  <button class="geo" (click)="changeLanguage('ge')" *ngIf="currentLang === 'en'">
+    <img src="../../../../assets/Georgia.png" alt="geo">
+  </button>
+
+
+  <button class="usa" (click)="changeLanguage('en')" *ngIf="currentLang === 'ge'"> <img src="../../../../assets/USA.png"
+      alt="usa"></button>
+
+</div>

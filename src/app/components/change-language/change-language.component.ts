@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslationService } from '../../../services/translation.service';
+import { TranslationService } from '../../services/translation.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,9 +10,13 @@ import { CommonModule } from '@angular/common';
   styleUrl: './change-language.component.scss',
 })
 export class ChangeLanguageComponent {
-  constructor(private translationService: TranslationService) {}
+  currentLang: string;
+  constructor(private translationService: TranslationService) {
+    this.currentLang = this.translationService.getCurrentLang(); // Initialize with current language
+  }
   changeLanguage(lang: string) {
     this.translationService.setLanguage(lang);
+    this.currentLang = lang;
     console.log('Language changed to:', lang);
   }
 }
