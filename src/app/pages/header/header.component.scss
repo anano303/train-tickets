@@ -44,12 +44,19 @@
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 620px) {
   .header {
-    flex-direction: column;
+    padding: 10px 30px;
     .header-left {
       img {
-        width: 150px;
+        width: 100px !important;
+      }
+    }
+
+    .header-right {
+      button {
+        font-size: 12px;
+        padding: 7px 8px;
       }
     }
   }
