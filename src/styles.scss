@@ -9,4 +9,13 @@ body.en {
 }
 body.ge {
   font-size: small;
+
+  .header {
+    .header-left {
+      h1 {
+        font-size: 25px !important;
+        display: inline;
+      }
+    }
+  }
 }
