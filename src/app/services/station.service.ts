@@ -7,7 +7,7 @@ import { IStation } from '../models/station.model';
   providedIn: 'root',
 })
 export class StationService {
-  private apiUrl = 'https://railway.stepprojects.ge/api/';
+  private apiUrl = 'https://railway.stepprojects.ge/api';
   constructor(private http: HttpClient) {}
 
   getStations(): Observable<IStation[]> {

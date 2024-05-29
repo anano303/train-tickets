@@ -1,3 +1,5 @@
+import { IVagon } from './vagon.module';
+
 export interface ITrains {
   id: number;
   number: number;
@@ -8,4 +10,5 @@ export interface ITrains {
   departure: string;
   arrive: string;
   departureId: number;
+  vagons: IVagon[];
 }

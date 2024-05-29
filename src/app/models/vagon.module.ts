@@ -1,15 +1,9 @@
-export interface IVagons {
+import { ISeat } from './seats.model';
+
+export interface IVagon {
   id: number;
   trainId: number;
   trainNumber: number;
   name: string;
-  seats: [
-    {
-      seatId: string;
-      number: string;
-      price: number;
-      isOccupied: boolean;
-      vagonId: number;
-    }
-  ];
+  seats: ISeat[];
 }

@@ -1,4 +1,29 @@
 <div class="trains">
 
-  <p>find-trains works!</p>
+  <h1>მატარებლების განრიგი</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Train Name</th>
+        <th>Departure (Time & Place)</th>
+        <th>Arrival Time</th>
+        <th>Book</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let train of trains">
+
+        <td>#{{ train.number }} <br> {{ train.name }}</td>
+
+
+        <td>{{ train.departure }} <br> {{ train.from }}</td>
+        <td>{{ train.arrive }} <br> {{ train.to }}</td>
+        <td><button class="book-button" (click)="bookTrain(train)">Book Now</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
 </div>

@@ -26,7 +26,9 @@ export class HomeComponent {
     private stationService: StationService,
     private translationService: TranslationService
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getStations();
+  }
   getStations(): void {
     this.stationService
       .getStations()

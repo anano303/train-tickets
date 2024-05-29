@@ -1,13 +1,40 @@
 .trains {
-  width: 100%;
-  height: 80vh;
-  background-color: wheat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 90vh;
+  padding: 20px 20px;
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-  p {
-    color: red;
-    font-size: 60px;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .book-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #45a049;
+    }
   }
 }

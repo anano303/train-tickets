@@ -7,10 +7,14 @@ import { IDepartures } from '../models/departure.model';
   providedIn: 'root',
 })
 export class DepartureService {
-  private apiUrl = 'https://railway.stepprojects.ge/api/';
+  private apiUrl = 'https://railway.stepprojects.ge/api';
   constructor(private http: HttpClient) {}
 
-  getDepartures(): Observable<IDepartures[]> {
+  getDepartures(
+    from: string,
+    to: string,
+    date: string
+  ): Observable<IDepartures[]> {
     const url = `${this.apiUrl}/departures`;
     console.log(url);
     return this.http.get<IDepartures[]>(url);
