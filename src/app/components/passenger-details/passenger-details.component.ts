@@ -4,21 +4,14 @@ import {
   FormArray,
   FormBuilder,
   FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
   Validators,
+  ReactiveFormsModule,
+  FormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, ActivatedRoute } from '@angular/router';
 import { SeatsService } from '../../services/seats.service';
 import { ISeat } from '../../models/seats.model';
-
-interface Passenger {
-  seat: string;
-  name: string;
-  surname: string;
-  privateNumber: string;
-}
 
 @Component({
   selector: 'app-passenger-details',
@@ -29,7 +22,7 @@ interface Passenger {
 })
 export class PassengerDetailsComponent {
   @Input() train: ITrains | null = null;
-  @Input() numberOfPassengers: number = 2;
+  numberOfPassengers: number = 1;
 
   passengerForm: FormGroup;
   showModal: boolean = false;
@@ -38,13 +31,19 @@ export class PassengerDetailsComponent {
   seats: ISeat[] = [];
   classType: string = '';
 
-  constructor(private fb: FormBuilder, private seatsService: SeatsService) {
+  constructor(
+    private fb: FormBuilder,
+    private seatsService: SeatsService,
+    private route: ActivatedRoute
+  ) {
     this.passengerForm = this.fb.group({
       passengers: this.fb.array([]),
     });
   }
 
   ngOnInit(): void {
+    const state = history.state as { numberOfPassengers: number };
+    this.numberOfPassengers = state.numberOfPassengers;
     this.initPassengers();
   }
 
