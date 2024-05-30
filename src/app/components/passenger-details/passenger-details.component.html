@@ -1,12 +1,14 @@
 <div class="passenger-details">
   <h1>Passenger Information</h1>
   <form (ngSubmit)="submitForm()" #passengerForm="ngForm">
-    <div *ngFor="let passenger of passengers; let i = index">
-      <h3>Passenger {{ i + 1 }}</h3>
+    <div *ngFor="let passenger of passengers; let i = index" style="margin-bottom: 30px;">
+      <h3 style="margin-bottom: 20px;">Passenger {{ i + 1 }}</h3>
       <div>
         <label for="seat">Seat</label>
-        <input type="text" id="seat" name="seat" [(ngModel)]="passenger.seat" required />
-        <button type="button" (click)="chooseSeat(i)">Choose Seat</button>
+        <div style="display: flex; gap:5px; justify-content: space-between; align-items: center;">
+          <input type="text" id="seat" name="seat" [(ngModel)]="passenger.seat" required />
+          <button type="button" (click)="chooseSeat(i)">Choose Seat</button>
+        </div>
       </div>
       <div>
         <label for="name">Name</label>
@@ -18,7 +20,7 @@
       </div>
       <div>
         <label for="pirateNumber">Pirate Number</label>
-        <input type="text" id="pirateNumber" name="pirateNumber" [(ngModel)]="passenger.pirateNumber" required />
+        <input type="text" id="pirateNumber" name="pirateNumber" [(ngModel)]="passenger.privateNumber" required />
       </div>
     </div>
     <button type="submit">Submit</button>

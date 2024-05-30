@@ -4,12 +4,13 @@ import { ITrains } from '../../models/train.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
+import { IStation } from '../../models/station.model';
 
 interface Passenger {
   seat: string;
   name: string;
   surname: string;
-  pirateNumber: string;
+  privateNumber: number;
 }
 
 @Component({
@@ -20,9 +21,16 @@ interface Passenger {
   styleUrls: ['./passenger-details.component.scss'],
 })
 export class PassengerDetailsComponent {
-  @Input() train: ITrains | null = null;
-  @Input() numberOfPassengers: number = 1;
+  @Input() trains: ITrains | null = null;
+  @Input() station: IStation[] = [];
   passengers: Passenger[] = [];
+  numberOfPassengers: number = 2; //stationNumber დან მინდა წამოიღოს :(
+  // get numberOfPassengers(): number {
+  //   return this.station.reduce(
+  //     (acc, station) => acc + Number(station.stationNumber),
+  //     0
+  //   );
+  // }
 
   constructor() {}
 
@@ -33,7 +41,7 @@ export class PassengerDetailsComponent {
         seat: '',
         name: '',
         surname: '',
-        pirateNumber: '',
+        privateNumber: 0,
       }));
   }
 
