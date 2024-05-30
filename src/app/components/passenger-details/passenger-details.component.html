@@ -1,27 +1,29 @@
-<!-- passenger-details.component.html -->
 <div class="passenger-details">
   <h1>Passenger Information</h1>
-  <form (ngSubmit)="submitForm()" #passengerForm="ngForm">
-    <div *ngFor="let passenger of passengers; let i = index" style="margin-bottom: 30px;">
-      <h3 style="margin-bottom: 20px;">Passenger {{ i + 1 }}</h3>
-      <div>
-        <label for="seat">Seat</label>
-        <div style="display: flex; gap:5px; justify-content: space-between; align-items: center;">
-          <input type="text" id="seat" name="seat" [(ngModel)]="passenger.seat" required />
-          <button type="button" (click)="chooseSeat(i)">Choose Seat</button>
+  <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
+    <div formArrayName="passengers" *ngFor="let passenger of passengers.controls; let i = index"
+      style="margin-bottom: 30px;">
+      <div [formGroupName]="i">
+        <h3 style="margin-bottom: 20px;">Passenger {{ i + 1 }}</h3>
+        <div>
+          <label for="seat">Seat</label>
+          <div style="display: flex; gap: 5px; justify-content: space-between; align-items: center;">
+            <input type="text" formControlName="seat" id="seat" required />
+            <button type="button" (click)="chooseSeat(i)">Choose Seat</button>
+          </div>
         </div>
-      </div>
-      <div>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" [(ngModel)]="passenger.name" required />
-      </div>
-      <div>
-        <label for="surname">Surname</label>
-        <input type="text" id="surname" name="surname" [(ngModel)]="passenger.surname" required />
-      </div>
-      <div>
-        <label for="pirateNumber">Pirate Number</label>
-        <input type="text" id="pirateNumber" name="pirateNumber" [(ngModel)]="passenger.privateNumber" required />
+        <div>
+          <label for="name">Name</label>
+          <input type="text" formControlName="name" id="name" required />
+        </div>
+        <div>
+          <label for="surname">Surname</label>
+          <input type="text" formControlName="surname" id="surname" required />
+        </div>
+        <div>
+          <label for="privateNumber">Private Number</label>
+          <input type="text" formControlName="privateNumber" id="privateNumber" required />
+        </div>
       </div>
     </div>
     <button type="submit">Submit</button>
@@ -37,7 +39,6 @@
       </div>
     </div>
   </div>
-
   <!-- Seats selection modal -->
   <div class="modal" [style.display]="showSeats ? 'block' : 'none'">
     <div class="modal-content">
@@ -51,5 +52,4 @@
     </div>
   </div>
 </div>
-
 <router-outlet></router-outlet>

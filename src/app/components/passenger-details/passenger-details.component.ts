@@ -1,6 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ITrains } from '../../models/train.model';
-import { FormsModule } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SeatsService } from '../../services/seats.service';
@@ -16,31 +23,48 @@ interface Passenger {
 @Component({
   selector: 'app-passenger-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet],
+  imports: [CommonModule, FormsModule, RouterOutlet, ReactiveFormsModule],
   templateUrl: './passenger-details.component.html',
   styleUrls: ['./passenger-details.component.scss'],
 })
-export class PassengerDetailsComponent implements OnInit {
+export class PassengerDetailsComponent {
   @Input() train: ITrains | null = null;
   @Input() numberOfPassengers: number = 2;
-  passengers: Passenger[] = [];
+
+  passengerForm: FormGroup;
   showModal: boolean = false;
   showSeats: boolean = false;
   selectedPassengerIndex: number | null = null;
   seats: ISeat[] = [];
   classType: string = '';
 
-  constructor(private seatsService: SeatsService) {}
+  constructor(private fb: FormBuilder, private seatsService: SeatsService) {
+    this.passengerForm = this.fb.group({
+      passengers: this.fb.array([]),
+    });
+  }
 
   ngOnInit(): void {
-    this.passengers = Array(this.numberOfPassengers)
-      .fill(null)
-      .map(() => ({
-        seat: '',
-        name: '',
-        surname: '',
-        privateNumber: '',
-      }));
+    this.initPassengers();
+  }
+
+  get passengers(): FormArray {
+    return this.passengerForm.get('passengers') as FormArray;
+  }
+
+  initPassengers(): void {
+    for (let i = 0; i < this.numberOfPassengers; i++) {
+      this.passengers.push(this.createPassengerGroup());
+    }
+  }
+
+  createPassengerGroup(): FormGroup {
+    return this.fb.group({
+      seat: ['', Validators.required],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      privateNumber: ['', Validators.required],
+    });
   }
 
   chooseSeat(index: number): void {
@@ -50,14 +74,14 @@ export class PassengerDetailsComponent implements OnInit {
 
   closeModal(): void {
     this.showModal = false;
-    this.showSeats = false; // Close the seats modal when closing the class selection modal
+    this.showSeats = false;
   }
 
   selectClass(classType: string): void {
     this.classType = classType;
     this.seatsService.getSeatsForClass(classType).subscribe(
-      (seat) => {
-        this.seats = seat;
+      (seats) => {
+        this.seats = seats;
         this.showSeats = true;
       },
       (error) => {
@@ -68,7 +92,10 @@ export class PassengerDetailsComponent implements OnInit {
 
   selectSeat(seat: ISeat): void {
     if (!seat.isOccupied && this.selectedPassengerIndex !== null) {
-      this.passengers[this.selectedPassengerIndex].seat = seat.number;
+      this.passengers
+        .at(this.selectedPassengerIndex)
+        .get('seat')
+        ?.setValue(seat.number);
       this.showSeats = false;
     } else {
       alert('This seat is occupied. Please choose another seat.');
@@ -76,6 +103,13 @@ export class PassengerDetailsComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log('Passenger details submitted:', this.passengers);
+    if (this.passengerForm.valid) {
+      console.log(
+        'Passenger details submitted:',
+        this.passengerForm.value.passengers
+      );
+    } else {
+      console.log('Form is invalid');
+    }
   }
 }

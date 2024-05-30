@@ -11,7 +11,7 @@ export class SeatsService {
   constructor(private http: HttpClient) {}
 
   getSeatsForClass(classType: string): Observable<ISeat[]> {
-    const url = `${this.apiUrl}/seat/{seatId}?class=${classType}`;
+    const url = `${this.apiUrl}/seat/seatId/?class=${classType}`;
     return this.http.get<ISeat[]>(url);
   }
 }
