@@ -5,13 +5,13 @@
       <div class="from-where">
         <select name="from" [(ngModel)]="trainsData.from" required>
           <option value="">From where</option>
-          <option *ngFor="let station of stations" [value]="station.stationNumber">{{station.name}}</option>
+          <option *ngFor="let station of stations" [value]="station.name">{{station.name}}</option>
         </select>
       </div>
       <div class="where">
         <select name="to" [(ngModel)]="trainsData.to" required>
           <option value="">Where</option>
-          <option *ngFor="let station of stations" [value]="station.stationNumber">{{station.name}}</option>
+          <option *ngFor="let station of stations" [value]="station.name">{{station.name}}</option>
         </select>
       </div>
       <div class="departure-date">

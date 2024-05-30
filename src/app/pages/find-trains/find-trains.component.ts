@@ -31,30 +31,26 @@ export class FindTrainsComponent {
   ) {}
 
   ngOnInit(): void {
+    const navigation = history.state;
+    this.from = navigation.from;
+    this.to = navigation.to;
+    this.date = navigation.date;
+    this.passengers = navigation.passengers;
     this.fetchDepartures(this.from, this.to, this.date);
-    // const navigation = this.router.getCurrentNavigation();
-    // if (navigation && navigation.extras.state) {
-    //   const state = navigation.extras.state as {
-    //     from: string;
-    //     to: string;
-    //     date: string;
-    //     passengers: number;
-    //   };
-    //   this.from = state.from;
-    //   this.to = state.to;
-    //   this.date = state.date;
-    //   this.passengers = state.passengers;
-    //   this.fetchDepartures(this.from, this.to, this.date);
-    // }
   }
 
   fetchDepartures(from: string, to: string, date: string): void {
     this.departureService.getDepartures(from, to, date).subscribe(
       (data: IDepartures[]) => {
         this.trains = [];
-        data.forEach((departure) => {
-          this.trains.push(...departure.trains);
-        });
+        data
+          .filter(
+            (departure) =>
+              departure.source === from && departure.destination === to
+          )
+          .forEach((departure) => {
+            this.trains.push(...departure.trains);
+          });
       },
       (error) => {
         console.error('Error fetching departures', error);
@@ -64,7 +60,7 @@ export class FindTrainsComponent {
 
   bookTrain(train: ITrains): void {
     this.router.navigate(['/passenger-details'], {
-      state: { train, passengers: this.passengers },
+      state: { train, numberOfPassengers: this.passengers },
     });
   }
 }
