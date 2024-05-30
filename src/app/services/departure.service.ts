@@ -15,8 +15,9 @@ export class DepartureService {
     to: string,
     date: string
   ): Observable<IDepartures[]> {
-    const url = `${this.apiUrl}/departures`;
-    console.log(url);
+    const url = `${this.apiUrl}/departures?from=${encodeURIComponent(
+      from
+    )}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}`;
     return this.http.get<IDepartures[]>(url);
   }
 }

@@ -9,7 +9,6 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { CommonEngine } from '@angular/ssr';
 
 @Component({
   selector: 'app-reservation',
@@ -50,12 +49,12 @@ export class ReservationComponent {
         )
         .subscribe((data) => {
           this.departureData = data;
-          // Optionally navigate to another page or display data
-          this.router.navigate(['/trains']);
+          this.router.navigate(['/trains'], {
+            state: { ...this.trainsData },
+          });
         });
     } else {
-      // Handle form validation errors
-      console.log('Form is invalid');
+      alert('გთხოვთ შეავსოთ სრული ინფორმაცია');
     }
   }
 }

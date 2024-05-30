@@ -3,6 +3,7 @@ import { FindTrainsComponent } from './pages/find-trains/find-trains.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AppComponent } from './app.component';
 import { LayoutsComponent } from './components/layouts/layouts.component';
+import { PassengerDetailsComponent } from './components/passenger-details/passenger-details.component';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'trains', component: FindTrainsComponent },
+
+      { path: 'passenger-details', component: PassengerDetailsComponent },
       { path: '**', redirectTo: '/' },
     ],
   },
