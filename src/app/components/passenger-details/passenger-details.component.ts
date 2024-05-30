@@ -12,11 +12,18 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, ActivatedRoute } from '@angular/router';
 import { SeatsService } from '../../services/seats.service';
 import { ISeat } from '../../models/seats.model';
+import { InvoiceComponent } from '../invoice/invoice.component';
 
 @Component({
   selector: 'app-passenger-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterOutlet,
+    ReactiveFormsModule,
+    InvoiceComponent,
+  ],
   templateUrl: './passenger-details.component.html',
   styleUrls: ['./passenger-details.component.scss'],
 })

@@ -1,0 +1,19 @@
+<div class="invoice">
+  <h1>ინვოისი</h1>
+  <div *ngFor="let passenger of passengerForm.get('passengers').controls; let i = index">
+    <div>
+      <strong>ადგილი:</strong> {{ passenger.get('seat').value }}
+    </div>
+    <div>
+      <strong>ფასი:</strong> {{ prices }}₾
+    </div>
+  </div>
+  <div>
+    <strong>სულ ფასი:</strong> {{ totalPrice }}₾
+  </div>
+  <div>
+    <input type="checkbox" id="terms" name="terms" />
+    <label for="terms"> წავიკითხე და ვეთანხმები პირობებს</label>
+  </div>
+  <button type="button">ბილეთის რეგისტრაცია</button>
+</div>

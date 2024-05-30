@@ -1,4 +1,7 @@
 .passenger-details {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
   min-height: 90vh;
   background-color: #f0f8ff;
   padding: 20px;
@@ -6,8 +9,8 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   // Center the form
-  margin: 0 auto;
-  max-width: 500px;
+  // margin: 0 auto;
+  // max-width: 500px;
 
   h1 {
     color: #007bff;
@@ -119,5 +122,10 @@
     &:not(.occupied):hover {
       background-color: lightgreen;
     }
+  }
+}
+@media screen and (max-width: 620px) {
+  .passenger-details {
+    flex-direction: column;
   }
 }

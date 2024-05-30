@@ -1,57 +1,62 @@
 <div class="passenger-details">
-  <h1>Passenger Information</h1>
-  <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
-    <div formArrayName="passengers" *ngFor="let passenger of passengers.controls; let i = index"
-      style="margin-bottom: 30px;">
-      <div [formGroupName]="i">
-        <h3 style="margin-bottom: 20px;">Passenger {{ i + 1 }}</h3>
-        <div>
-          <label for="seat">Seat</label>
-          <div style="display: flex; gap: 5px; justify-content: space-between; align-items: center;">
-            <input type="text" formControlName="seat" id="seat" required />
-            <button type="button" (click)="chooseSeat(i)">Choose Seat</button>
+  <div>
+    <h1>Passenger Information</h1>
+    <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
+      <div formArrayName="passengers" *ngFor="let passenger of passengers.controls; let i = index"
+        style="margin-bottom: 30px;">
+        <div [formGroupName]="i">
+          <h3 style="margin-bottom: 20px;">Passenger {{ i + 1 }}</h3>
+          <div>
+            <label for="seat">Seat</label>
+            <div style="display: flex; gap: 5px; justify-content: space-between; align-items: center;">
+              <input type="text" formControlName="seat" id="seat" required />
+              <button type="button" (click)="chooseSeat(i)">Choose Seat</button>
+            </div>
+          </div>
+          <div>
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" id="name" required />
+          </div>
+          <div>
+            <label for="surname">Surname</label>
+            <input type="text" formControlName="surname" id="surname" required />
+          </div>
+          <div>
+            <label for="privateNumber">Private Number</label>
+            <input type="text" formControlName="privateNumber" id="privateNumber" />
+            <div *ngIf="passenger.get('privateNumber')?.invalid && passenger.get('privateNumber')?.touched"
+              style="color:red">შეიყვანეთ სწორი პირადი ნომერი</div>
           </div>
         </div>
-        <div>
-          <label for="name">Name</label>
-          <input type="text" formControlName="name" id="name" required />
-        </div>
-        <div>
-          <label for="surname">Surname</label>
-          <input type="text" formControlName="surname" id="surname" required />
-        </div>
-        <div>
-          <label for="privateNumber">Private Number</label>
-          <input type="text" formControlName="privateNumber" id="privateNumber" />
-          <div *ngIf="passenger.get('privateNumber')?.invalid && passenger.get('privateNumber')?.touched"
-            style="color:red">შეიყვანეთ სწორი პირადი ნომერი</div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <!-- Class selection modal -->
+    <div class="modal" [style.display]="showModal ? 'block' : 'none'">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <div class="class-selection">
+          <img src="../../../assets/trainOne.png" alt="First Class" (click)="selectClass('first')" />
+          <img src="../../../assets/trainTwo.png" alt="Second Class" (click)="selectClass('second')" />
+          <img src="../../../assets/trainThree.png" alt="Third Class" (click)="selectClass('third')" />
         </div>
       </div>
     </div>
-    <button type="submit">Submit</button>
-  </form>
-  <!-- Class selection modal -->
-  <div class="modal" [style.display]="showModal ? 'block' : 'none'">
-    <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
-      <div class="class-selection">
-        <img src="../../../assets/trainOne.png" alt="First Class" (click)="selectClass('first')" />
-        <img src="../../../assets/trainTwo.png" alt="Second Class" (click)="selectClass('second')" />
-        <img src="../../../assets/trainThree.png" alt="Third Class" (click)="selectClass('third')" />
+    <!-- Seats selection modal -->
+    <div class="modal" [style.display]="showSeats ? 'block' : 'none'">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h2>Select a Seat</h2>
+        <div class="seats-container">
+          <div class="seat" *ngFor="let seat of seats" [class.occupied]="seat.isOccupied" (click)="selectSeat(seat)">
+            {{ seat.number }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <!-- Seats selection modal -->
-  <div class="modal" [style.display]="showSeats ? 'block' : 'none'">
-    <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
-      <h2>Select a Seat</h2>
-      <div class="seats-container">
-        <div class="seat" *ngFor="let seat of seats" [class.occupied]="seat.isOccupied" (click)="selectSeat(seat)">
-          {{ seat.number }}
-        </div>
-      </div>
-    </div>
+  <div class="invoice-container" style="flex: 1; padding-left: 20px;">
+    <app-invoice [passengerForm]="passengerForm"></app-invoice>
   </div>
 </div>
 <router-outlet></router-outlet>
