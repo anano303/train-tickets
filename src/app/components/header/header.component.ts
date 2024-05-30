@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
 import { TranslatePipe } from '../../translate.pipe';
-import { ChangeLanguageComponent } from '../../components/change-language/change-language.component';
+import { ChangeLanguageComponent } from '../change-language/change-language.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({

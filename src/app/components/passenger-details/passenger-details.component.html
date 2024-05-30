@@ -1,3 +1,4 @@
+<!-- passenger-details.component.html -->
 <div class="passenger-details">
   <h1>Passenger Information</h1>
   <form (ngSubmit)="submitForm()" #passengerForm="ngForm">
@@ -25,6 +26,30 @@
     </div>
     <button type="submit">Submit</button>
   </form>
+  <!-- Class selection modal -->
+  <div class="modal" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <div class="class-selection">
+        <img src="../../../assets/trainOne.png" alt="First Class" (click)="selectClass('first')" />
+        <img src="../../../assets/trainTwo.png" alt="Second Class" (click)="selectClass('second')" />
+        <img src="../../../assets/trainThree.png" alt="Third Class" (click)="selectClass('third')" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Seats selection modal -->
+  <div class="modal" [style.display]="showSeats ? 'block' : 'none'">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Select a Seat</h2>
+      <div class="seats-container">
+        <div class="seat" *ngFor="let seat of seats" [class.occupied]="seat.isOccupied" (click)="selectSeat(seat)">
+          {{ seat.number }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <router-outlet></router-outlet>

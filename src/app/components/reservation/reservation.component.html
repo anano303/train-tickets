@@ -15,11 +15,11 @@
         </select>
       </div>
       <div class="departure-date">
-        <input type="date" name="date" [(ngModel)]="trainsData.date" required>
+        <input type="date" name="date" [(ngModel)]="trainsData.date" [min]="minDate" required>
       </div>
       <div class="passenger-number">
         <input type="number" name="passengers" [(ngModel)]="trainsData.passengers" placeholder="Number of people"
-          required>
+          required min="1">
       </div>
       <div class="btn">
         <button type="submit">Find a train</button>

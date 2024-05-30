@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IStation } from '../../models/station.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -33,13 +33,26 @@ export class ReservationComponent {
     passengers: 1,
   };
   departureData: any;
+  minDate: any;
 
   constructor(
     private router: Router,
     private departureService: DepartureService
   ) {}
+  ngOnInit(): void {
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0]; // Set minDate to today's date
+  }
 
   Departures(): void {
+    const selectedDate = new Date(this.trainsData.date);
+    const today = new Date();
+
+    if (selectedDate < today) {
+      alert('Please select a valid date.');
+      return;
+    }
+
     if (this.trainsData.from && this.trainsData.to && this.trainsData.date) {
       this.departureService
         .getDepartures(
