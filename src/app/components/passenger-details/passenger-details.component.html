@@ -22,7 +22,9 @@
         </div>
         <div>
           <label for="privateNumber">Private Number</label>
-          <input type="text" formControlName="privateNumber" id="privateNumber" required />
+          <input type="text" formControlName="privateNumber" id="privateNumber" />
+          <div *ngIf="passenger.get('privateNumber')?.invalid && passenger.get('privateNumber')?.touched"
+            style="color:red">შეიყვანეთ სწორი პირადი ნომერი</div>
         </div>
       </div>
     </div>

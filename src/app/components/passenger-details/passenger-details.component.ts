@@ -62,7 +62,7 @@ export class PassengerDetailsComponent {
       seat: ['', Validators.required],
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      privateNumber: ['', Validators.required],
+      privateNumber: ['', [Validators.required, Validators.minLength(9)]],
     });
   }
 
@@ -108,7 +108,7 @@ export class PassengerDetailsComponent {
         this.passengerForm.value.passengers
       );
     } else {
-      console.log('Form is invalid');
+      console.log('გთხოვთ შეავსოთ სრულად');
     }
   }
 }
