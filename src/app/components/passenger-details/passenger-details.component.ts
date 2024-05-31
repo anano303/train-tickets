@@ -23,12 +23,11 @@ import { InvoiceComponent } from '../invoice/invoice.component';
     RouterOutlet,
     ReactiveFormsModule,
     InvoiceComponent,
-    RouterOutlet,
   ],
   templateUrl: './passenger-details.component.html',
   styleUrls: ['./passenger-details.component.scss'],
 })
-export class PassengerDetailsComponent implements OnInit {
+export class PassengerDetailsComponent {
   @Input() trains: ITrains[] = [];
   selectedTrain: ITrains | null = null;
   numberOfPassengers: number = 1;
@@ -52,12 +51,12 @@ export class PassengerDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const state = history.state;
-    if (state && state.train) {
-      this.selectedTrain = state.train;
+    const navigation = history.state;
+    if (navigation && navigation.train) {
+      this.selectedTrain = navigation.train;
     }
-    if (state && state.numberOfPassengers) {
-      this.numberOfPassengers = state.numberOfPassengers;
+    if (navigation && navigation.numberOfPassengers) {
+      this.numberOfPassengers = navigation.numberOfPassengers;
     }
     this.initPassengers();
   }
