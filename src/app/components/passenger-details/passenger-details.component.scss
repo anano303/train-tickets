@@ -7,42 +7,62 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  .selectTrain {
+    margin-bottom: 80px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 5px 4px 7px 0px rgb(11, 11, 93);
+      thead {
+        tr {
+          background-color: #1e3855;
+          color: #cae0e1;
+        }
+      }
+      th,
+      td {
+        border: 1px dotted black;
+        padding: 8px;
+        text-align: left;
+      }
+      td {
+        color: #cae0e1;
+        background-color: #41516d;
+      }
+    }
+  }
+}
 
-  // Center the form
-  // margin: 0 auto;
-  // max-width: 500px;
+h1 {
+  color: #007bff;
+}
 
-  h1 {
-    color: #007bff;
+form {
+  margin-top: 20px;
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
   }
 
-  form {
-    margin-top: 20px;
+  // Style button
+  button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #007bff;
-      border-radius: 5px;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-
-    // Style button
-    button {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #0056b3;
-      }
+    &:hover {
+      background-color: #0056b3;
     }
   }
 }

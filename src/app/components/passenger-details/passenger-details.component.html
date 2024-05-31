@@ -1,5 +1,29 @@
 <div class="passenger-details">
   <div>
+    <!-- <div class="trains" *ngIf="!selectedTrain">
+
+
+    </div> -->
+
+    <div *ngIf="selectedTrain" class="selectTrain">
+      <table>
+        <thead>
+          <tr>
+            <th>არჩეული მატარებელი</th>
+            <th> გასვლა</th>
+            <th>ჩასვლა</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#{{selectedTrain.number}} <br> {{ selectedTrain.name }}</td>
+            <td> {{ selectedTrain.departure }} <br> {{ selectedTrain.from }}</td>
+            <td> {{ selectedTrain.arrive }} <br> {{ selectedTrain.to }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <h1>Passenger Information</h1>
     <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
       <div formArrayName="passengers" *ngFor="let passenger of passengers.controls; let i = index"

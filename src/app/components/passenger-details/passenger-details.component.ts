@@ -9,7 +9,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, ActivatedRoute } from '@angular/router';
+import { RouterOutlet, ActivatedRoute, Router } from '@angular/router';
 import { SeatsService } from '../../services/seats.service';
 import { ISeat } from '../../models/seats.model';
 import { InvoiceComponent } from '../invoice/invoice.component';
@@ -17,12 +17,20 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 @Component({
   selector: 'app-passenger-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet, ReactiveFormsModule,InvoiceComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterOutlet,
+    ReactiveFormsModule,
+    InvoiceComponent,
+    RouterOutlet,
+  ],
   templateUrl: './passenger-details.component.html',
   styleUrls: ['./passenger-details.component.scss'],
 })
-export class PassengerDetailsComponent {
-  @Input() train: ITrains | null = null;
+export class PassengerDetailsComponent implements OnInit {
+  @Input() trains: ITrains[] = [];
+  selectedTrain: ITrains | null = null;
   numberOfPassengers: number = 1;
 
   passengerForm: FormGroup;
@@ -35,7 +43,8 @@ export class PassengerDetailsComponent {
   constructor(
     private fb: FormBuilder,
     private seatsService: SeatsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.passengerForm = this.fb.group({
       passengers: this.fb.array([]),
@@ -43,8 +52,13 @@ export class PassengerDetailsComponent {
   }
 
   ngOnInit(): void {
-    const state = history.state as { numberOfPassengers: number };
-    this.numberOfPassengers = state.numberOfPassengers;
+    const state = history.state;
+    if (state && state.train) {
+      this.selectedTrain = state.train;
+    }
+    if (state && state.numberOfPassengers) {
+      this.numberOfPassengers = state.numberOfPassengers;
+    }
     this.initPassengers();
   }
 
@@ -109,7 +123,11 @@ export class PassengerDetailsComponent {
         this.passengerForm.value.passengers
       );
     } else {
-      console.log('გთხოვთ შეავსოთ სრულად');
+      console.log('Please fill out the form completely.');
     }
+  }
+
+  bookTrain(train: ITrains): void {
+    this.selectedTrain = train;
   }
 }
