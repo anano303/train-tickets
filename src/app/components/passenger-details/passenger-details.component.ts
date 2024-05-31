@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { ITrains } from '../../models/train.model';
 import {
   FormArray,
@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet, ActivatedRoute, Router } from '@angular/router';
 import { SeatsService } from '../../services/seats.service';
 import { ISeat } from '../../models/seats.model';
@@ -43,22 +43,40 @@ export class PassengerDetailsComponent {
     private fb: FormBuilder,
     private seatsService: SeatsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.passengerForm = this.fb.group({
       passengers: this.fb.array([]),
     });
-  }
+    if (isPlatformBrowser(this.platformId)) {
+      const navigation = this.router.getCurrentNavigation()?.extras.state;
 
-  ngOnInit(): void {
-    const navigation = history.state;
-    if (navigation && navigation.train) {
-      this.selectedTrain = navigation.train;
+      if (
+        navigation &&
+        'train' in navigation &&
+        'numberOfPassengers' in navigation
+      ) {
+        this.selectedTrain = navigation['train'];
+        this.numberOfPassengers = navigation['numberOfPassengers'];
+        this.initPassengers();
+      } else {
+        console.error(
+          'Train or number of passengers data is missing in navigation state.'
+        );
+
+        if (
+          navigation &&
+          'train' in navigation &&
+          'numberOfPassengers' in navigation
+        ) {
+        } else {
+          console.error(
+            'Train or number of passengers data is missing in navigation state.'
+          );
+        }
+      }
     }
-    if (navigation && navigation.numberOfPassengers) {
-      this.numberOfPassengers = navigation.numberOfPassengers;
-    }
-    this.initPassengers();
   }
 
   get passengers(): FormArray {

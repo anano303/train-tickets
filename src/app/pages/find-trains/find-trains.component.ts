@@ -16,7 +16,7 @@ import { PassengerDetailsComponent } from '../../components/passenger-details/pa
   standalone: true,
   imports: [RouterOutlet, CommonModule, PassengerDetailsComponent],
   templateUrl: './find-trains.component.html',
-  styleUrl: './find-trains.component.scss',
+  styleUrls: ['./find-trains.component.scss'],
 })
 export class FindTrainsComponent {
   trains: ITrains[] = [];
@@ -28,15 +28,16 @@ export class FindTrainsComponent {
   constructor(
     private router: Router,
     private departureService: DepartureService
-  ) {}
-
-  ngOnInit(): void {
-    const navigation = history.state;
-    this.from = navigation.from;
-    this.to = navigation.to;
-    this.date = navigation.date;
-    this.passengers = navigation.passengers;
-    this.fetchDepartures(this.from, this.to, this.date);
+  ) {
+    // Retrieve state directly in the constructor
+    const navigation = this.router.getCurrentNavigation()?.extras.state;
+    if (navigation) {
+      this.from = navigation['from'];
+      this.to = navigation['to'];
+      this.date = navigation['date'];
+      this.passengers = navigation['passengers'];
+      this.fetchDepartures(this.from, this.to, this.date);
+    }
   }
 
   fetchDepartures(from: string, to: string, date: string): void {
