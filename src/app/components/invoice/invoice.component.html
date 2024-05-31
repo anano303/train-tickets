@@ -1,11 +1,11 @@
 <div class="invoice">
   <h1>ინვოისი</h1>
-  <div *ngFor="let passenger of passengerForm.get('passengers').controls; let i = index">
+  <div *ngFor="let passenger of passengers.controls; let i = index">
     <div>
-      <strong>ადგილი:</strong> {{ passenger.get('seat').value }}
+      <strong>ადგილი:</strong> {{ passenger.get('seat')?.value }}
     </div>
     <div>
-      <strong>ფასი:</strong> {{ prices }}₾
+      <strong>ფასი:</strong> {{ getPassengerPrice(passenger) }}₾
     </div>
   </div>
   <div>

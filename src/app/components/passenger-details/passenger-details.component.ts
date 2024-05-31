@@ -17,13 +17,7 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 @Component({
   selector: 'app-passenger-details',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterOutlet,
-    ReactiveFormsModule,
-    InvoiceComponent,
-  ],
+  imports: [CommonModule, FormsModule, RouterOutlet, ReactiveFormsModule,InvoiceComponent],
   templateUrl: './passenger-details.component.html',
   styleUrls: ['./passenger-details.component.scss'],
 })
