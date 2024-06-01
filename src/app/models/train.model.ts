@@ -1,4 +1,4 @@
-import { IVagon } from './vagon.module';
+import { IVagon } from './vagon.model';
 
 export interface ITrains {
   id: number;

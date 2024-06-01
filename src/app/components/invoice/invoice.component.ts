@@ -10,6 +10,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IVagon } from '../../models/vagon.model';
+import { ISeat } from '../../models/seats.model';
 // import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 // import { ITickets } from '../../models/ticket.model';
@@ -27,12 +29,14 @@ export class InvoiceComponent {
   @Input() passengerForm!: FormGroup;
   @Input() submitForm!: () => void;
   @Output() formSubmit: EventEmitter<number> = new EventEmitter<number>();
+  @Input() seat!: ISeat;
   totalPrice: number = 0;
-  prices: Record<SeatClass, number> = {
-    first: 100,
-    second: 70,
-    third: 50,
-  };
+  prices: number = 0;
+  // prices: Record<SeatClass, number> = {
+  //   first: 100,
+  //   second: 70,
+  //   third: 50,
+  // };
 
   invoiceForm: FormGroup;
 
@@ -54,8 +58,8 @@ export class InvoiceComponent {
     const passengers = this.passengerForm.get('passengers') as FormArray;
     passengers.controls.forEach((passenger) => {
       const seat = passenger.get('seat')?.value;
-      const seatClass = seat ? this.getSeatClass(seat) : 'third';
-      this.totalPrice += this.prices[seatClass] || 0;
+
+      this.totalPrice += this.seat.price || 0;
     });
   }
 
@@ -68,8 +72,7 @@ export class InvoiceComponent {
   getPassengerPrice(passenger: AbstractControl): number {
     const passengerFormGroup = passenger as FormGroup;
     const seat = passengerFormGroup.get('seat')?.value;
-    const seatClass = seat ? this.getSeatClass(seat) : 'third';
-    return this.prices[seatClass] || 0;
+    return this.seat.price || 0;
   }
 
   get passengers(): FormArray {

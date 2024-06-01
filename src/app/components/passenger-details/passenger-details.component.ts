@@ -19,6 +19,8 @@ import { SeatsService } from '../../services/seats.service';
 import { ITrains } from '../../models/train.model';
 import { ISeat } from '../../models/seats.model';
 import { InvoiceComponent } from '../invoice/invoice.component';
+import { VagonService } from '../../services/vagon.service';
+import { IVagon } from '../../models/vagon.model';
 
 @Component({
   selector: 'app-passenger-details',
@@ -44,11 +46,14 @@ export class PassengerDetailsComponent {
   showSeats: boolean = false;
   selectedPassengerIndex: number | null = null;
   seats: ISeat[] = [];
+  vagons: IVagon[] = [];
   classType: string = '';
+  seat?: ISeat;
 
   constructor(
     private fb: FormBuilder,
     private seatsService: SeatsService,
+    private vagonService: VagonService,
     private route: ActivatedRoute,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: object
@@ -69,12 +74,21 @@ export class PassengerDetailsComponent {
         this.selectedTrain = navigation['train'];
         this.numberOfPassengers = navigation['numberOfPassengers'];
         this.initPassengers();
+        this.initVagons();
       } else {
         console.error(
           'Train or number of passengers data is missing in navigation state.'
         );
       }
     }
+  }
+
+  initVagons() {
+    this.vagonService.getVagons().subscribe((vagons: IVagon[]) => {
+      this.vagons = vagons
+        .filter((vagon) => vagon.trainId === this.selectedTrain?.id)
+        .sort((a, b) => a.id - b.id);
+    });
   }
 
   get passengers(): FormArray {
@@ -106,20 +120,15 @@ export class PassengerDetailsComponent {
     this.showSeats = false;
   }
 
-  selectClass(classType: string): void {
-    this.classType = classType;
-    this.seatsService.getSeatsForClass(classType).subscribe(
-      (seats) => {
-        this.seats = seats;
-        this.showSeats = true;
-      },
-      (error) => {
-        console.error('Error fetching seats:', error);
-      }
-    );
+  selectClass(vagon: IVagon): void {
+    this.classType = vagon.name;
+    this.seats = vagon.seats;
+    this.showModal = false;
+    this.showSeats = true;
   }
 
   selectSeat(seat: ISeat): void {
+    this.seat = seat;
     if (!seat.isOccupied && this.selectedPassengerIndex !== null) {
       this.passengers
         .at(this.selectedPassengerIndex)
@@ -152,5 +161,17 @@ export class PassengerDetailsComponent {
 
   bookTrain(train: ITrains): void {
     this.selectedTrain = train;
+  }
+
+  getVagonAsset(vagon: IVagon) {
+    if (vagon.name === 'I კლასი') {
+      return '../../../assets/trainOne.png';
+    } else if (vagon.name === 'II კლასი') {
+      return '../../../assets/trainTwo.png';
+    } else if (vagon.name === 'ბიზნესი') {
+      return '../../../assets/trainThree.png';
+    } else {
+      return '../../../assets/trainTwo.png';
+    }
   }
 }
