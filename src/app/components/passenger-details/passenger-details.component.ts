@@ -47,6 +47,8 @@ export class PassengerDetailsComponent {
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.passengerForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern('[0-9 ]{9}$')]],
       passengers: this.fb.array([]),
     });
     if (isPlatformBrowser(this.platformId)) {

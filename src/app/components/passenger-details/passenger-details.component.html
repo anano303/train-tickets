@@ -1,10 +1,6 @@
 <div class="passenger-details">
   <div>
-    <!-- <div class="trains" *ngIf="!selectedTrain">
-
-
-    </div> -->
-
+    <h2 style="margin-bottom: 40px; margin-top: 40px;">შეიყვანეთ თქვენი მონაცემები</h2>
     <div *ngIf="selectedTrain" class="selectTrain">
       <table>
         <thead>
@@ -24,8 +20,27 @@
         </tbody>
       </table>
     </div>
-    <h1>Passenger Information</h1>
+
+
     <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
+      <h2>საკონტაქტო ინფორმაცია</h2>
+      <div class="contact"
+        style="display: flex; justify-content: space-between; margin-top: 50px; margin-bottom: 50px;">
+        <div>
+          <label for="email"></label>
+          <input type="text" formControlName="email" id="email" required placeholder="იმეილი" />
+          <div *ngIf="passengerForm.get('email')?.invalid && passengerForm.get('email')?.touched" style="color:red">
+            შეიყვანეთ იმეილი</div>
+        </div>
+        <div>
+          <label for="phone"></label>
+          <input type="text" formControlName="phone" id="phone" required placeholder="ტელეფონის ნომერი" />
+          <div *ngIf="passengerForm.get('phone')?.invalid && passengerForm.get('phone')?.touched" style="color:red">
+            შეიყვანეთ სწორი საკონტაქტო ნომერი</div>
+        </div>
+      </div>
+      <h2>Passenger Information</h2>
+
       <div formArrayName="passengers" *ngFor="let passenger of passengers.controls; let i = index"
         style="margin-bottom: 30px;">
         <div [formGroupName]="i">
