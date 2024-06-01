@@ -1,6 +1,7 @@
 <div class="payment-container">
   <div class="payment-box">
-    <h2>Total Price: {{ totalPrice }}₾</h2>
+    <h3>სულ გადასახდელი: {{ totalPrice }}₾</h3>
+
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="cardNumber">Credit Card Number</label>

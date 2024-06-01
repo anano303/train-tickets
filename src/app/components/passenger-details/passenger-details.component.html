@@ -39,29 +39,29 @@
             შეიყვანეთ სწორი საკონტაქტო ნომერი</div>
         </div>
       </div>
-      <h2>Passenger Information</h2>
+      <h2 style="margin-bottom: 30px;">ინფორმაცია მგზავრებზე</h2>
 
       <div formArrayName="passengers" *ngFor="let passenger of passengers.controls; let i = index"
         style="margin-bottom: 30px;">
         <div [formGroupName]="i">
-          <h3 style="margin-bottom: 20px;">Passenger {{ i + 1 }}</h3>
+          <h3 style="margin-bottom: 20px;"> მგზავრი {{ i + 1 }}</h3>
           <div>
-            <label for="seat">Seat</label>
+            <label for="seat">ადგილი</label>
             <div style="display: flex; gap: 5px; justify-content: space-between; align-items: center;">
               <input type="text" formControlName="seat" id="seat" required />
               <button type="button" (click)="chooseSeat(i)">Choose Seat</button>
             </div>
           </div>
           <div>
-            <label for="name">Name</label>
+            <label for="name">სახელი</label>
             <input type="text" formControlName="name" id="name" required />
           </div>
           <div>
-            <label for="surname">Surname</label>
+            <label for="surname">გვარი</label>
             <input type="text" formControlName="surname" id="surname" required />
           </div>
           <div>
-            <label for="privateNumber">Private Number</label>
+            <label for="privateNumber">პირადი ნომერი</label>
             <input type="text" formControlName="privateNumber" id="privateNumber" />
             <div *ngIf="passenger.get('privateNumber')?.invalid && passenger.get('privateNumber')?.touched"
               style="color:red">შეიყვანეთ სწორი პირადი ნომერი</div>
@@ -83,7 +83,7 @@
     <div class="modal" [style.display]="showSeats ? 'block' : 'none'">
       <div class="modal-content">
         <span class="close" (click)="closeModal()">&times;</span>
-        <h2>Select a Seat</h2>
+        <h2>აირჩიეთ ადგილი</h2>
         <div class="seats-container">
           <div class="seat" *ngFor="let seat of seats" [class.occupied]="seat.isOccupied" (click)="selectSeat(seat)">
             {{ seat.number }}

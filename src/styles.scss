@@ -3,12 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+@import url("//cdn.web-fonts.ge/fonts/bpg-nino-elite-ultra-caps/css/bpg-nino-elite-ultra-caps.min.css");
 
 body.en {
   font-size: medium;
 }
 body.ge {
   font-size: small;
+  font-family: "BPG Nino Elite Ultra Caps", sans-serif;
 
   .header {
     .header-left {

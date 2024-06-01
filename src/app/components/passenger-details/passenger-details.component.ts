@@ -22,6 +22,11 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 import { VagonService } from '../../services/vagon.service';
 import { IVagon } from '../../models/vagon.model';
 
+const sort: Record<string, number> = {
+  'I კლასი': 1,
+  'II კლასი': 2,
+  ბიზნესი: 3,
+};
 @Component({
   selector: 'app-passenger-details',
   standalone: true,
@@ -87,7 +92,7 @@ export class PassengerDetailsComponent {
     this.vagonService.getVagons().subscribe((vagons: IVagon[]) => {
       this.vagons = vagons
         .filter((vagon) => vagon.trainId === this.selectedTrain?.id)
-        .sort((a, b) => a.id - b.id);
+        .sort((a, b) => sort[a.name] - sort[b.name]);
     });
   }
 
