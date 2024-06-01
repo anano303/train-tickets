@@ -1,5 +1,10 @@
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
-import { ITrains } from '../../models/train.model';
+import {
+  Component,
+  Inject,
+  Input,
+  PLATFORM_ID,
+  ViewChild,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -11,6 +16,7 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet, ActivatedRoute, Router } from '@angular/router';
 import { SeatsService } from '../../services/seats.service';
+import { ITrains } from '../../models/train.model';
 import { ISeat } from '../../models/seats.model';
 import { InvoiceComponent } from '../invoice/invoice.component';
 
@@ -29,6 +35,7 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 })
 export class PassengerDetailsComponent {
   @Input() trains: ITrains[] = [];
+  @ViewChild(InvoiceComponent) invoiceComponent!: InvoiceComponent;
   selectedTrain: ITrains | null = null;
   numberOfPassengers: number = 1;
 
@@ -66,17 +73,6 @@ export class PassengerDetailsComponent {
         console.error(
           'Train or number of passengers data is missing in navigation state.'
         );
-
-        if (
-          navigation &&
-          'train' in navigation &&
-          'numberOfPassengers' in navigation
-        ) {
-        } else {
-          console.error(
-            'Train or number of passengers data is missing in navigation state.'
-          );
-        }
       }
     }
   }
@@ -137,12 +133,20 @@ export class PassengerDetailsComponent {
 
   submitForm(): void {
     if (this.passengerForm.valid) {
-      console.log(
-        'Passenger details submitted:',
-        this.passengerForm.value.passengers
-      );
+      const passengers = this.passengerForm.value.passengers;
+      const email = this.passengerForm.value.email;
+      const phone = this.passengerForm.value.phone;
+      const totalPrice = this.invoiceComponent.totalPrice;
+
+      console.log('Passenger details submitted:', passengers);
+      console.log('Contact email:', email);
+      console.log('Contact phone:', phone);
+      console.log('Total price:', totalPrice);
+
+      // Navigate to the payment page
+      this.router.navigate(['/payment'], { state: { totalPrice } });
     } else {
-      console.log('Please fill out the form completely.');
+      alert('Please fill out the form completely.');
     }
   }
 

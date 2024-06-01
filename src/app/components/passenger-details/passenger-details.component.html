@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <button type="submit">Submit</button>
+      <!-- <button type="submit">Submit</button> -->
     </form>
     <!-- Class selection modal -->
     <div class="modal" [style.display]="showModal ? 'block' : 'none'">
@@ -95,7 +95,7 @@
     </div>
   </div>
   <div class="invoice-container" style="flex: 1; padding-left: 20px;">
-    <app-invoice [passengerForm]="passengerForm"></app-invoice>
+    <app-invoice [passengerForm]="passengerForm" (formSubmit)="submitForm()"></app-invoice>
   </div>
 </div>
 <router-outlet></router-outlet>

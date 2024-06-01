@@ -1,4 +1,4 @@
-<div class="invoice">
+<div class="invoice" [formGroup]="invoiceForm">
   <h1>ინვოისი</h1>
   <div *ngFor="let passenger of passengers.controls; let i = index">
     <div>
@@ -12,8 +12,11 @@
     <strong>სულ ფასი:</strong> {{ totalPrice }}₾
   </div>
   <div>
-    <input type="checkbox" id="terms" name="terms" />
+    <input type="checkbox" id="terms" name="terms" formControlName="terms" />
     <label for="terms"> წავიკითხე და ვეთანხმები პირობებს</label>
+    <div *ngIf="invoiceForm.get('terms')?.invalid && invoiceForm.get('terms')?.touched" style="color: red;">
+      You must agree to the terms
+    </div>
   </div>
-  <button type="button">ბილეთის რეგისტრაცია</button>
+  <button type="button" (click)="submitInvoice()">ბილეთის რეგისტრაცია</button>
 </div>

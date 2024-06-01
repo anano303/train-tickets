@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 import {
   AbstractControl,
   FormArray,
+  FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 // import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 // import { ITickets } from '../../models/ticket.model';
@@ -22,6 +25,8 @@ type SeatClass = 'first' | 'second' | 'third';
 })
 export class InvoiceComponent {
   @Input() passengerForm!: FormGroup;
+  @Input() submitForm!: () => void;
+  @Output() formSubmit: EventEmitter<number> = new EventEmitter<number>();
   totalPrice: number = 0;
   prices: Record<SeatClass, number> = {
     first: 100,
@@ -29,7 +34,13 @@ export class InvoiceComponent {
     third: 50,
   };
 
-  constructor() {}
+  invoiceForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.invoiceForm = this.fb.group({
+      terms: [false, Validators.requiredTrue],
+    });
+  }
 
   ngOnInit() {
     this.calculateTotalPrice();
@@ -56,7 +67,6 @@ export class InvoiceComponent {
 
   getPassengerPrice(passenger: AbstractControl): number {
     const passengerFormGroup = passenger as FormGroup;
-
     const seat = passengerFormGroup.get('seat')?.value;
     const seatClass = seat ? this.getSeatClass(seat) : 'third';
     return this.prices[seatClass] || 0;
@@ -64,5 +74,16 @@ export class InvoiceComponent {
 
   get passengers(): FormArray {
     return this.passengerForm.get('passengers') as FormArray;
+  }
+
+  submitInvoice() {
+    if (this.invoiceForm.valid) {
+      this.formSubmit.emit(this.totalPrice);
+      this.router.navigate(['/payment'], {
+        state: { totalPrice: this.totalPrice },
+      });
+    } else {
+      alert('Please accept the terms and conditions.');
+    }
   }
 }
