@@ -1,5 +1,5 @@
 <div class="payment-container">
-  <div class="payment-box">
+  <div class="payment-box" *ngIf="showPaymentForm">
     <h3>სულ გადასახდელი: {{ totalPrice }}₾</h3>
 
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
@@ -36,6 +36,11 @@
       </div>
 
       <button type="submit" [disabled]="paymentForm.invalid">Payment</button>
+
     </form>
+  </div>
+  <div class="payment-success" *ngIf="!showPaymentForm">
+    <app-payment-success [paymentDate]="paymentDate" [passengerData]="passengerData"></app-payment-success>
+
   </div>
 </div>

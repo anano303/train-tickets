@@ -16,6 +16,8 @@ export const routes: Routes = [
 
       { path: 'passenger-details', component: PassengerDetailsComponent },
       { path: 'payment', component: PaymentComponent },
+
+      // { path: '', redirectTo: '/payment', pathMatch: 'full' },
       { path: '**', redirectTo: '/' },
     ],
   },

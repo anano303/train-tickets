@@ -7,7 +7,7 @@ import { ITickets } from '../models/ticket.model';
   providedIn: 'root',
 })
 export class TicketService {
-  private apiUrl = 'https://railway.stepprojects.ge/api/';
+  private apiUrl = 'https://railway.stepprojects.ge/api';
   constructor(private http: HttpClient) {}
 
   getTickets(): Observable<ITickets[]> {

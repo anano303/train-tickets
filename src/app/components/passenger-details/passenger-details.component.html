@@ -1,6 +1,7 @@
 <div class="passenger-details">
   <div>
     <h2 style="margin-bottom: 40px; margin-top: 40px;">შეიყვანეთ თქვენი მონაცემები</h2>
+    <!-- selected-train.component.html -->
     <div *ngIf="selectedTrain" class="selectTrain">
       <table>
         <thead>
@@ -20,7 +21,6 @@
         </tbody>
       </table>
     </div>
-
 
     <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
       <h2>საკონტაქტო ინფორმაცია</h2>

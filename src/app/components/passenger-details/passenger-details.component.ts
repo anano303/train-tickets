@@ -158,7 +158,13 @@ export class PassengerDetailsComponent {
       console.log('Total price:', totalPrice);
 
       // Navigate to the payment page
-      this.router.navigate(['/payment'], { state: { totalPrice } });
+      this.router.navigate(['/payment'], {
+        state: {
+          totalPrice,
+          selectedTrain: this.selectedTrain,
+          passengerForm: this.passengerForm.value,
+        },
+      });
     } else {
       alert('Please fill out the form completely.');
     }
