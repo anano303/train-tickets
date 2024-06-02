@@ -6,20 +6,21 @@
     <p> <span> გადახდის თარიღი:</span> {{ paymentDate | date: 'dd/MM/yyyy' }}</p>
   </div>
   <div>
-    <h3>Train Information</h3>
-    <!-- <div *ngIf="passengerData?.selectedTrain">
-      <p>Train ID: {{ passengerData.selectedTrain.id }}</p>
-      <p>Train Name: {{ passengerData.selectedTrain.name }}</p>
-    </div> -->
-    <h3>Contact Information</h3>
-    <p>Email: {{ passengerData?.email }}</p>
-    <p>Phone: {{ passengerData?.phone }}</p>
+    <div *ngIf="selectedTrain"> <!-- Check if selectedTrain exists -->
+      <h3>Train Information</h3>
+      <p>Train ID: {{ selectedTrain.id }}</p>
+      <p>Train Name: {{ selectedTrain.name }}</p>
+    </div>
+    <div>
+      <h3>Contact Information</h3>
+      <p>Email: {{ passengerData?.email }}</p>
+      <p>Phone: {{ passengerData?.phone }}</p>
+    </div>
+    <div *ngFor="let passenger of passengerData?.passengers">
+      <h3>Passenger Details</h3>
+      <p>Name: {{ passenger.name }}</p>
+      <p>Surname: {{ passenger.surname }}</p>
+      <p>Private Number: {{ passenger.privateNumber }}</p>
+      <p>Seat: {{ passenger.seat }}</p>
+    </div>
   </div>
-  <div *ngFor="let passenger of passengerData?.passengers">
-    <h3>Passenger Details</h3>
-    <p>Name: {{ passenger.name }}</p>
-    <p>Surname: {{ passenger.surname }}</p>
-    <p>Private Number: {{ passenger.privateNumber }}</p>
-    <p>Seat: {{ passenger.seat }}</p>
-  </div>
-</div>

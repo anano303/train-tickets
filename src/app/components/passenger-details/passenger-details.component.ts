@@ -21,6 +21,7 @@ import { ISeat } from '../../models/seats.model';
 import { InvoiceComponent } from '../invoice/invoice.component';
 import { VagonService } from '../../services/vagon.service';
 import { IVagon } from '../../models/vagon.model';
+import { TrainSelectionService } from '../../shared/trainSelectionService.service';
 
 const sort: Record<string, number> = {
   'I კლასი': 1,
@@ -156,8 +157,8 @@ export class PassengerDetailsComponent {
       console.log('Contact email:', email);
       console.log('Contact phone:', phone);
       console.log('Total price:', totalPrice);
+      console.log('Selected Train:', this.selectedTrain);
 
-      // Navigate to the payment page
       this.router.navigate(['/payment'], {
         state: {
           totalPrice,

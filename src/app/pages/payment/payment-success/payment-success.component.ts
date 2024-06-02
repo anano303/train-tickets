@@ -11,6 +11,8 @@ import { IVagon } from '../../../models/vagon.model';
 import { ITrains } from '../../../models/train.model';
 import { response } from 'express';
 import { TicketRegistrationService } from '../../../services/ticket-registration.service';
+import { IRegistration } from '../../../models/registration.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-success',
@@ -22,13 +24,27 @@ import { TicketRegistrationService } from '../../../services/ticket-registration
 export class PaymentSuccessComponent {
   @Input() paymentDate!: Date;
   @Input() passengerData!: any;
+  selectedTrain: ITrains | null = null;
   tickets: ITickets[] = [];
 
   constructor(
     private ticketService: TicketService,
-    private ticketRegistrationService: TicketRegistrationService
+    private ticketRegistrationService: TicketRegistrationService,
+    private router: Router
   ) {
-    // this.passengerData = {};
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      const state = navigation.extras.state as { [key: string]: any };
+      this.paymentDate = state['paymentDate'];
+      this.passengerData = state['passengerData'];
+      this.selectedTrain = state['selectedTrain'] || null; // selectedTrain might be undefined
+    } else {
+      // Handle case where navigation extras state is not provided
+      console.error(
+        'Navigation extras state is missing. Selected train cannot be determined.'
+      );
+      this.selectedTrain = null; // Initialize selectedTrain to null
+    }
   }
   ngOnInit(): void {
     this.fetchTickets();
@@ -42,9 +58,18 @@ export class PaymentSuccessComponent {
     });
   }
   submitRegistration() {
-    if (this.passengerData) {
+    // Check if selectedTrain and other data exist before making the call
+    if (this.selectedTrain) {
+      const registrationData: IRegistration = {
+        trainId: this.selectedTrain.id,
+        date: new Date().toISOString(),
+        email: this.passengerData.email,
+        phoneNumber: this.passengerData.phone,
+        people: this.passengerData.passengers,
+      };
+
       this.ticketRegistrationService
-        .postTicketRegistration(this.passengerData)
+        .postTicketRegistration(registrationData)
         .subscribe(
           (response) => {
             console.log('Registration data submitted successfully:', response);
@@ -56,7 +81,8 @@ export class PaymentSuccessComponent {
             );
           }
         );
+    } else {
+      console.error('Selected train is missing. Cannot submit registration.');
     }
   }
-  // Call the service method to submit registration data
 }

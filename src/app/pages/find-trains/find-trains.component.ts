@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { DepartureService } from '../../services/departure.service';
 import { IDepartures } from '../../models/departure.model';
 import { CommonModule } from '@angular/common';
 import { ITrains } from '../../models/train.model';
 import { PassengerDetailsComponent } from '../../components/passenger-details/passenger-details.component';
+import { TrainSelectionService } from '../../shared/trainSelectionService.service';
 
 @Component({
   selector: 'app-find-trains',
@@ -27,9 +23,9 @@ export class FindTrainsComponent {
 
   constructor(
     private router: Router,
-    private departureService: DepartureService
+    private departureService: DepartureService,
+    private trainSelectionService: TrainSelectionService
   ) {
-    // Retrieve state directly in the constructor
     const navigation = this.router.getCurrentNavigation()?.extras.state;
     if (navigation) {
       this.from = navigation['from'];
@@ -60,6 +56,7 @@ export class FindTrainsComponent {
   }
 
   bookTrain(train: ITrains): void {
+    this.trainSelectionService.setSelectedTrain(train);
     this.router.navigate(['/passenger-details'], {
       state: { train, numberOfPassengers: this.passengers },
     });
