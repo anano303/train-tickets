@@ -56,9 +56,11 @@ export class FindTrainsComponent {
   }
 
   bookTrain(train: ITrains): void {
+    console.log('Selected train:', train);
+    console.log('Number of passengers:', this.passengers);
     this.trainSelectionService.setSelectedTrain(train);
     this.router.navigate(['/passenger-details'], {
-      state: { train, numberOfPassengers: this.passengers },
+      state: { train: train, numberOfPassengers: this.passengers },
     });
   }
 }

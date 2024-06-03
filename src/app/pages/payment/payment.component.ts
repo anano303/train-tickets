@@ -78,7 +78,6 @@ export class PaymentComponent {
   onSubmit(): void {
     if (this.paymentForm.valid) {
       if (this.selectedTrain) {
-        // Check if selectedTrain is defined
         const paymentData = this.paymentForm.value;
         this.showPaymentForm = false;
         this.paymentDate = new Date();
@@ -91,17 +90,24 @@ export class PaymentComponent {
           phoneNumber: this.passengerData.phone,
           people: this.passengerData.passengers,
         };
+
         this.ticketRegistrationService
           .postTicketRegistration(registrationData)
           .subscribe(
             (response) => {
               console.log('Tickets registered successfully:', response);
+              this.router.navigate(['/payment-success'], {
+                state: {
+                  response, // Pass the response to the success page
+                  paymentDate: this.paymentDate,
+                  passengerData: this.passengerData,
+                },
+              });
             },
             (error) => {
               console.error('Error registering tickets:', error);
             }
           );
-        alert('Payment processed successfully!');
       } else {
         alert('Please fill out the form correctly.');
       }

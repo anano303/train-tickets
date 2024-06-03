@@ -2,25 +2,7 @@
   <div>
     <h2 style="margin-bottom: 40px; margin-top: 40px;">შეიყვანეთ თქვენი მონაცემები</h2>
     <!-- selected-train.component.html -->
-    <div *ngIf="selectedTrain" class="selectTrain">
-      <table>
-        <thead>
-          <tr>
-            <th>არჩეული მატარებელი</th>
-            <th> გასვლა</th>
-            <th>ჩასვლა</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>#{{selectedTrain.number}} <br> {{ selectedTrain.name }}</td>
-            <td> {{selectedTrain.date}} - {{ selectedTrain.departure }} <br> {{ selectedTrain.from }}</td>
-            <td> {{selectedTrain.date}} - {{ selectedTrain.arrive }} <br> {{ selectedTrain.to }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <app-selected-train [selectedTrain]="selectedTrain"></app-selected-train>
 
     <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
       <h2>საკონტაქტო ინფორმაცია</h2>

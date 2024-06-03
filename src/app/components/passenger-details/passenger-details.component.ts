@@ -22,6 +22,7 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 import { VagonService } from '../../services/vagon.service';
 import { IVagon } from '../../models/vagon.model';
 import { TrainSelectionService } from '../../shared/trainSelectionService.service';
+import { SelectedTrainComponent } from '../../shared/selected-train/selected-train.component';
 
 const sort: Record<string, number> = {
   'I კლასი': 1,
@@ -37,6 +38,7 @@ const sort: Record<string, number> = {
     RouterOutlet,
     ReactiveFormsModule,
     InvoiceComponent,
+    SelectedTrainComponent,
   ],
   templateUrl: './passenger-details.component.html',
   styleUrls: ['./passenger-details.component.scss'],
@@ -83,7 +85,8 @@ export class PassengerDetailsComponent {
         this.initVagons();
       } else {
         console.error(
-          'Train or number of passengers data is missing in navigation state.'
+          'Train or number of passengers data is missing in navigation state.',
+          navigation
         );
       }
     }

@@ -1,0 +1,25 @@
+.selectTrain {
+  margin-bottom: 80px;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 5px 4px 7px 0px rgb(11, 11, 93);
+    thead {
+      tr {
+        background-color: #1e3855;
+        color: #cae0e1;
+        text-align: center;
+      }
+    }
+    th,
+    td {
+      border: 1px dotted black;
+      padding: 8px;
+      text-align: left;
+    }
+    td {
+      color: #cae0e1;
+      background-color: #41516d;
+    }
+  }
+}

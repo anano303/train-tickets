@@ -13,11 +13,12 @@ import { response } from 'express';
 import { TicketRegistrationService } from '../../../services/ticket-registration.service';
 import { IRegistration } from '../../../models/registration.model';
 import { Router } from '@angular/router';
+import { SelectedTrainComponent } from '../../../shared/selected-train/selected-train.component';
 
 @Component({
   selector: 'app-payment-success',
   standalone: true,
-  imports: [PaymentComponent, CommonModule],
+  imports: [PaymentComponent, CommonModule, SelectedTrainComponent],
   templateUrl: './payment-success.component.html',
   styleUrl: './payment-success.component.scss',
 })
@@ -26,6 +27,7 @@ export class PaymentSuccessComponent {
   @Input() passengerData!: any;
   selectedTrain: ITrains | null = null;
   tickets: ITickets[] = [];
+  response: any;
 
   constructor(
     private ticketService: TicketService,
@@ -35,6 +37,7 @@ export class PaymentSuccessComponent {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       const state = navigation.extras.state as { [key: string]: any };
+      this.response = state['response'];
       this.paymentDate = state['paymentDate'];
       this.passengerData = state['passengerData'];
       this.selectedTrain = state['selectedTrain'] || null; // selectedTrain might be undefined
@@ -49,6 +52,7 @@ export class PaymentSuccessComponent {
   ngOnInit(): void {
     this.fetchTickets();
     this.submitRegistration();
+    console.log('API Response:', this.response);
   }
 
   fetchTickets() {
