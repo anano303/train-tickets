@@ -6,6 +6,7 @@
     margin-left: 90px;
     border: 1px solid black;
     padding: 40px;
+    margin-bottom: 90px;
     h1 {
       font-size: 24px;
       color: #4caf50;
@@ -19,6 +20,7 @@
       flex-wrap: wrap;
       padding: 10px;
       margin-bottom: 20px;
+      gap: 5vw;
 
       div {
         margin-bottom: 10px;
@@ -93,6 +95,8 @@
     .passengers {
       display: flex;
       justify-content: space-between;
+      column-gap: 2vh;
+      row-gap: 2vw;
       flex-wrap: wrap;
       border: 1px solid #e0e0e0;
       padding: 10px;
@@ -129,10 +133,20 @@
   button {
     border: none;
     background-color: transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   i.material-icons {
     display: inline-block;
     vertical-align: middle;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }

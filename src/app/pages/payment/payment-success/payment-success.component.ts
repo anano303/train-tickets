@@ -16,6 +16,9 @@ import { Router } from '@angular/router';
 import { SelectedTrainComponent } from '../../../shared/selected-train/selected-train.component';
 import jsPDF from 'jspdf';
 import { materialize } from 'rxjs';
+import { Html2CanvasOptions } from 'jspdf';
+
+import html2canvas from 'html2canvas';
 
 declare var html2pdf: any;
 
@@ -97,10 +100,18 @@ export class PaymentSuccessComponent {
     }
   }
   downloadPDF() {
-    console.log('Download PDF button clicked!');
     const element = document.querySelector('.pdf') as HTMLElement;
-    console.log('Selected element:', element);
-    html2pdf().from(element).save();
+
+    html2canvas(element).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('downloaded-pdf.pdf');
+    });
   }
 
   printPage() {
