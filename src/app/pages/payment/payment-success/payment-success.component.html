@@ -1,24 +1,53 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="payment-succes">
-  <div class="ticket-div">
-    <div>
-      <p> <span>ბილეთის ნომერი:</span> {{ tickets[0].id }}</p>
+  <div class="pdf">
+    <h1> გადახდა წარმატებულია </h1>
+    <div class="ticket-div">
+      <div>
+        <p> <span>ბილეთის ნომერი:</span> {{ tickets[0].id }}</p>
+      </div>
+      <p> <span> გადახდის თარიღი:</span> {{ paymentDate | date: 'dd/MM/yyyy' }}</p>
     </div>
-    <p> <span> გადახდის თარიღი:</span> {{ paymentDate | date: 'dd/MM/yyyy' }}</p>
-  </div>
-  <div>
-    <app-selected-train [selectedTrain]="selectedTrain"></app-selected-train>
-    <h3>Contact Information</h3>
-    <p>Email: {{ passengerData?.email }}</p>
-    <p>Phone: {{ passengerData?.phone }}</p>
-  </div>
-  <div *ngFor="let passenger of passengerData?.passengers">
-    <h3>Passenger Details</h3>
-    <p>Name: {{ passenger.name }}</p>
-    <p>Surname: {{ passenger.surname }}</p>
-    <p>Private Number: {{ passenger.privateNumber }}</p>
-    <p>Seat: {{ passenger.seat }}</p>
-  </div>
+    <div class="train-info">
+      <p> გამგზავრება: <br> <span> {{tickets[0].train.from}} {{tickets[0].train.departure}} </span></p>
+      <p> ჩასვლა: <br> <span> {{tickets[0].train.to }} {{tickets[0].train.arrive}} </span></p>
+      <p> გასვლის თარიღი: <br> <span> {{tickets[0].date | date }} </span></p>
+
+    </div>
 
 
+    <h3>საკონტაქტო ინფორმაცია</h3>
+    <div class="contact-info">
+      <p>მეილი: {{ tickets[0].email }}</p>
+      <p>ტელ. ნომერი: {{ tickets[0].phone }}</p>
+    </div>
+    <h3>მგზავრები</h3>
+    <div *ngFor="let passenger of tickets[0]?.persons" class="passengers">
 
+      <p>სახელი: {{ passenger.name }}</p>
+      <p>გვარი: {{ passenger.surname }}</p>
+      <p>პირადი ნომერი: {{ passenger.idNumber }}</p>
+      <p>ადგილი: {{ passenger.seat.number }}</p>
+      <p>ვაგონის N: {{ passenger.seat.vagonId }}</p>
+    </div>
+    <div class="card-owner">
+      <h3>ბარათის მფლობელი</h3> <!-- Add Card Owner Information -->
+      <p>{{ cardOwner }}</p>
+    </div>
+    <div>
+      <h3>სულ გადასახდელი</h3> <!-- Add Total Price Information -->
+      <p>{{ totalPrice }}₾</p>
+    </div>
+
+  </div>
+  <div class="action-buttons">
+    <button mat-raised-button color="primary" (click)="downloadPDF()">
+      <i class="material-icons">picture_as_pdf</i>
+      Download as PDF
+    </button>
+    <button mat-raised-button color="accent" (click)="printPage()">
+      <i class="material-icons">print</i>
+      Print
+    </button>
+  </div>
 </div>

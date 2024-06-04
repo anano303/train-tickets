@@ -91,6 +91,39 @@ export class PassengerDetailsComponent {
       }
     }
   }
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const savedPassengerForm = localStorage.getItem('passengerForm');
+      const savedSelectedTrain = localStorage.getItem('selectedTrain');
+      const savedNumberOfPassengers =
+        localStorage.getItem('numberOfPassengers');
+
+      if (savedPassengerForm) {
+        this.passengerForm.setValue(JSON.parse(savedPassengerForm));
+      }
+      if (savedSelectedTrain) {
+        this.selectedTrain = JSON.parse(savedSelectedTrain);
+      }
+      if (savedNumberOfPassengers) {
+        this.numberOfPassengers = JSON.parse(savedNumberOfPassengers);
+        this.initPassengers();
+      }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(
+        'passengerForm',
+        JSON.stringify(this.passengerForm.value)
+      );
+      localStorage.setItem('selectedTrain', JSON.stringify(this.selectedTrain));
+      localStorage.setItem(
+        'numberOfPassengers',
+        JSON.stringify(this.numberOfPassengers)
+      );
+    }
+  }
 
   initVagons() {
     this.vagonService.getVagons().subscribe((vagons: IVagon[]) => {
@@ -156,11 +189,11 @@ export class PassengerDetailsComponent {
       const phone = this.passengerForm.value.phone;
       const totalPrice = this.invoiceComponent.totalPrice;
 
-      console.log('Passenger details submitted:', passengers);
-      console.log('Contact email:', email);
-      console.log('Contact phone:', phone);
-      console.log('Total price:', totalPrice);
-      console.log('Selected Train:', this.selectedTrain);
+      // if (isPlatformBrowser(this.platformId)) {
+      //   localStorage.removeItem('passengerForm');
+      //   localStorage.removeItem('selectedTrain');
+      //   localStorage.removeItem('numberOfPassengers');
+      // }
 
       this.router.navigate(['/payment'], {
         state: {

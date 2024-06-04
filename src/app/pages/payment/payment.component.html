@@ -1,6 +1,6 @@
 <div class="payment-container">
   <div class="payment-box" *ngIf="showPaymentForm">
-    <h3>სულ გადასახდელი: {{ totalPrice }}₾</h3>
+    <h3>სულ გადასახდელი: {{ totalPrice }} ₾</h3>
 
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -40,7 +40,8 @@
     </form>
   </div>
   <div class="payment-success" *ngIf="!showPaymentForm">
-    <app-payment-success [paymentDate]="paymentDate" [passengerData]="passengerData"></app-payment-success>
+    <app-payment-success [paymentDate]="paymentDate" [passengerData]="passengerData"
+      [cardOwner]="paymentForm.value.cardOwner" [totalPrice]="totalPrice"></app-payment-success>
 
   </div>
 </div>

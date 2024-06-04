@@ -73,6 +73,21 @@ export class PaymentComponent {
 
   ngOnInit(): void {
     this.selectedTrain = this.trainSelectionService.getSelectedTrain();
+    if (typeof localStorage !== 'undefined') {
+      const savedPaymentForm = localStorage.getItem('paymentForm');
+      const savedTotalPrice = localStorage.getItem('totalPrice');
+      const savedPassengerData = localStorage.getItem('passengerData');
+
+      if (savedPaymentForm) {
+        this.paymentForm.setValue(JSON.parse(savedPaymentForm));
+      }
+      if (savedTotalPrice) {
+        this.totalPrice = JSON.parse(savedTotalPrice);
+      }
+      if (savedPassengerData) {
+        this.passengerData = JSON.parse(savedPassengerData);
+      }
+    }
   }
 
   onSubmit(): void {
@@ -82,6 +97,15 @@ export class PaymentComponent {
         this.showPaymentForm = false;
         this.paymentDate = new Date();
         this.paymentSuccess = true;
+
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('paymentForm', JSON.stringify(paymentData));
+          localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
+          localStorage.setItem(
+            'passengerData',
+            JSON.stringify(this.passengerData)
+          );
+        }
 
         const registrationData: IRegistration = {
           trainId: this.selectedTrain.id,
@@ -98,9 +122,11 @@ export class PaymentComponent {
               console.log('Tickets registered successfully:', response);
               this.router.navigate(['/payment-success'], {
                 state: {
-                  response, // Pass the response to the success page
+                  response,
                   paymentDate: this.paymentDate,
                   passengerData: this.passengerData,
+                  cardOwner: paymentData.cardOwner,
+                  totalPrice: this.totalPrice,
                 },
               });
             },

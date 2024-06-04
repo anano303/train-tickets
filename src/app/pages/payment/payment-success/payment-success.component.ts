@@ -14,6 +14,10 @@ import { TicketRegistrationService } from '../../../services/ticket-registration
 import { IRegistration } from '../../../models/registration.model';
 import { Router } from '@angular/router';
 import { SelectedTrainComponent } from '../../../shared/selected-train/selected-train.component';
+import jsPDF from 'jspdf';
+import { materialize } from 'rxjs';
+
+declare var html2pdf: any;
 
 @Component({
   selector: 'app-payment-success',
@@ -25,6 +29,8 @@ import { SelectedTrainComponent } from '../../../shared/selected-train/selected-
 export class PaymentSuccessComponent {
   @Input() paymentDate!: Date;
   @Input() passengerData!: any;
+  @Input() cardOwner!: string;
+  @Input() totalPrice!: number;
   selectedTrain: ITrains | null = null;
   tickets: ITickets[] = [];
   response: any;
@@ -41,11 +47,13 @@ export class PaymentSuccessComponent {
       this.paymentDate = state['paymentDate'];
       this.passengerData = state['passengerData'];
       this.selectedTrain = state['selectedTrain'] || null; // selectedTrain might be undefined
+      this.cardOwner = state['cardOwner']; // Retrieve cardOwner from navigation state
+      this.totalPrice = state['totalPrice'];
     } else {
+      console.log('Total Price:', this.totalPrice);
+      console.log('Card Owner:', this.cardOwner);
       // Handle case where navigation extras state is not provided
-      console.error(
-        'Navigation extras state is missing. Selected train cannot be determined.'
-      );
+      console.error('Navigation extras state is missing');
       this.selectedTrain = null; // Initialize selectedTrain to null
     }
   }
@@ -56,13 +64,12 @@ export class PaymentSuccessComponent {
   }
 
   fetchTickets() {
-    // Use the ticket service to fetch tickets
     this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
       this.tickets = tickets;
+      console.log(tickets);
     });
   }
   submitRegistration() {
-    // Check if selectedTrain and other data exist before making the call
     if (this.selectedTrain) {
       const registrationData: IRegistration = {
         trainId: this.selectedTrain.id,
@@ -88,5 +95,15 @@ export class PaymentSuccessComponent {
     } else {
       console.error('Selected train is missing. Cannot submit registration.');
     }
+  }
+  downloadPDF() {
+    console.log('Download PDF button clicked!');
+    const element = document.querySelector('.pdf') as HTMLElement;
+    console.log('Selected element:', element);
+    html2pdf().from(element).save();
+  }
+
+  printPage() {
+    window.print();
   }
 }
