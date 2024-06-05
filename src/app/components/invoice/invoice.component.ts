@@ -12,6 +12,7 @@ import {
 import { Router } from '@angular/router';
 import { IVagon } from '../../models/vagon.model';
 import { ISeat } from '../../models/seats.model';
+import { ITrains } from '../../models/train.model';
 // import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 // import { ITickets } from '../../models/ticket.model';
@@ -30,13 +31,9 @@ export class InvoiceComponent {
   @Input() submitForm!: () => void;
   @Output() formSubmit: EventEmitter<number> = new EventEmitter<number>();
   @Input() seat!: ISeat;
+  selectedTrain: ITrains | null = null;
   totalPrice: number = 0;
   prices: number = 0;
-  // prices: Record<SeatClass, number> = {
-  //   first: 100,
-  //   second: 70,
-  //   third: 50,
-  // };
 
   invoiceForm: FormGroup;
 
@@ -44,6 +41,11 @@ export class InvoiceComponent {
     this.invoiceForm = this.fb.group({
       terms: [false, Validators.requiredTrue],
     });
+    const navigation = this.router.getCurrentNavigation()?.extras.state;
+    if (navigation) {
+      this.selectedTrain = navigation['train'];
+      this.passengerForm = navigation['passengerForm'];
+    }
   }
 
   ngOnInit() {
@@ -83,7 +85,11 @@ export class InvoiceComponent {
     if (this.invoiceForm.valid) {
       this.formSubmit.emit(this.totalPrice);
       this.router.navigate(['/payment'], {
-        state: { totalPrice: this.totalPrice },
+        state: {
+          totalPrice: this.totalPrice,
+          passengerForm: this.passengerForm.value,
+          train: this.selectedTrain,
+        },
       });
     } else {
       alert('Please accept the terms and conditions.');

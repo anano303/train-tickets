@@ -32,7 +32,7 @@ export class PaymentComponent {
   showPaymentForm: boolean = true;
   paymentForm: FormGroup;
   totalPrice!: number; // Example total price, you can pass this as an @Input() from the parent component
-  selectedTrain: ITrains | undefined;
+  selectedTrain: ITrains | null = null;
   // @Input() selectedTrain!: ITrains;
   @Input() numberOfPassengers!: number; // Define numberOfPassengers
   paymentSuccess: boolean = false; // or false, depending on your logic
@@ -50,8 +50,9 @@ export class PaymentComponent {
       const state = navigation.extras.state as { [key: string]: any };
       this.totalPrice = state['totalPrice'] || 0; // Use bracket notation to access totalPrice
       this.passengerData = state['passengerForm'] || {};
-      this.selectedTrain = state['selectedTrain'];
+      this.selectedTrain = state['train'] || null;
       console.log('Selected Train in Payment:', this.selectedTrain);
+      console.log('State:', state);
     }
 
     this.paymentForm = this.fb.group({
@@ -72,7 +73,6 @@ export class PaymentComponent {
   }
 
   ngOnInit(): void {
-    this.selectedTrain = this.trainSelectionService.getSelectedTrain();
     if (typeof localStorage !== 'undefined') {
       const savedPaymentForm = localStorage.getItem('paymentForm');
       const savedTotalPrice = localStorage.getItem('totalPrice');
@@ -92,51 +92,50 @@ export class PaymentComponent {
 
   onSubmit(): void {
     if (this.paymentForm.valid) {
-      if (this.selectedTrain) {
-        const paymentData = this.paymentForm.value;
-        this.showPaymentForm = false;
-        this.paymentDate = new Date();
-        this.paymentSuccess = true;
+      const paymentData = this.paymentForm.value;
+      this.showPaymentForm = false;
+      this.paymentDate = new Date();
+      this.paymentSuccess = true;
 
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('paymentForm', JSON.stringify(paymentData));
-          localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
-          localStorage.setItem(
-            'passengerData',
-            JSON.stringify(this.passengerData)
-          );
-        }
-
-        const registrationData: IRegistration = {
-          trainId: this.selectedTrain.id,
-          date: new Date().toISOString(),
-          email: this.passengerData.email,
-          phoneNumber: this.passengerData.phone,
-          people: this.passengerData.passengers,
-        };
-
-        this.ticketRegistrationService
-          .postTicketRegistration(registrationData)
-          .subscribe(
-            (response) => {
-              console.log('Tickets registered successfully:', response);
-              this.router.navigate(['/payment-success'], {
-                state: {
-                  response,
-                  paymentDate: this.paymentDate,
-                  passengerData: this.passengerData,
-                  cardOwner: paymentData.cardOwner,
-                  totalPrice: this.totalPrice,
-                },
-              });
-            },
-            (error) => {
-              console.error('Error registering tickets:', error);
-            }
-          );
-      } else {
-        alert('Please fill out the form correctly.');
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('paymentForm', JSON.stringify(paymentData));
+        localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
+        localStorage.setItem(
+          'passengerData',
+          JSON.stringify(this.passengerData)
+        );
       }
+
+      const registrationData: IRegistration = {
+        trainId: this.selectedTrain ? this.selectedTrain.id : 0, // Remove or handle trainId if needed
+        date: new Date().toISOString(),
+        email: this.passengerData.email,
+        phoneNumber: this.passengerData.phone,
+        people: this.passengerData.passengers,
+      };
+
+      this.ticketRegistrationService
+        .postTicketRegistration(registrationData)
+        .subscribe(
+          (response) => {
+            console.log('Tickets registered successfully:', response);
+            this.router.navigate(['/payment-success'], {
+              state: {
+                response,
+                paymentDate: this.paymentDate,
+                passengerData: this.passengerData,
+                cardOwner: paymentData.cardOwner,
+                totalPrice: this.totalPrice,
+                // selectedTrain: this.selectedTrain, // Remove if not needed
+              },
+            });
+          },
+          (error) => {
+            console.error('Error registering tickets:', error);
+          }
+        );
+    } else {
+      alert('Please fill out the form correctly.');
     }
   }
 }

@@ -17,8 +17,8 @@ import { SelectedTrainComponent } from '../../../shared/selected-train/selected-
 import jsPDF from 'jspdf';
 import { materialize } from 'rxjs';
 import { Html2CanvasOptions } from 'jspdf';
-
 import html2canvas from 'html2canvas';
+import { TrainSelectionService } from '../../../shared/trainSelectionService.service';
 
 declare var html2pdf: any;
 
@@ -30,34 +30,38 @@ declare var html2pdf: any;
   styleUrl: './payment-success.component.scss',
 })
 export class PaymentSuccessComponent {
+  @Input() trains: ITrains[] = [];
   @Input() paymentDate!: Date;
   @Input() passengerData!: any;
   @Input() cardOwner!: string;
   @Input() totalPrice!: number;
+  // @Input() selectedTrain!: string;//
   selectedTrain: ITrains | null = null;
   tickets: ITickets[] = [];
   response: any;
+  numberOfPassengers: number = 1;
 
   constructor(
     private ticketService: TicketService,
     private ticketRegistrationService: TicketRegistrationService,
-    private router: Router
+    private router: Router,
+    private trainSelectionService: TrainSelectionService
   ) {
     const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state) {
+    if (navigation && navigation?.extras.state) {
       const state = navigation.extras.state as { [key: string]: any };
+      this.selectedTrain = navigation.extras.state['train'];
       this.response = state['response'];
-      this.paymentDate = state['paymentDate'];
-      this.passengerData = state['passengerData'];
-      this.selectedTrain = state['selectedTrain'] || null; // selectedTrain might be undefined
-      this.cardOwner = state['cardOwner']; // Retrieve cardOwner from navigation state
-      this.totalPrice = state['totalPrice'];
+      this.paymentDate = navigation.extras.state['passengerForm'];
+      this.passengerData = navigation.extras.state['passengerData'];
+      this.cardOwner = navigation.extras.state['cardOwner'];
+      this.totalPrice = navigation.extras.state['totalPrice'];
+      this.numberOfPassengers =
+        navigation.extras.state['numberOfPassengers'] || 1;
     } else {
       console.log('Total Price:', this.totalPrice);
       console.log('Card Owner:', this.cardOwner);
-      // Handle case where navigation extras state is not provided
-      console.error('Navigation extras state is missing');
-      this.selectedTrain = null; // Initialize selectedTrain to null
+      console.error('selectedTrain in success', this.selectedTrain);
     }
   }
   ngOnInit(): void {
@@ -99,6 +103,7 @@ export class PaymentSuccessComponent {
       console.error('Selected train is missing. Cannot submit registration.');
     }
   }
+
   downloadPDF() {
     const element = document.querySelector('.pdf') as HTMLElement;
 
