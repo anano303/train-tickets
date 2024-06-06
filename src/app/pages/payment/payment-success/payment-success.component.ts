@@ -60,6 +60,11 @@ export class PaymentSuccessComponent {
     this.selectedTrain = this.trainSelectionService.getSelectedTrain();
     this.formattedDate = this.trainSelectionService.getFormattedDate();
     console.log('Selected Train in Payment:', this.selectedTrain);
+    console.log('Passenger Data:', this.passengerData);
+    console.log('Tickets:', this.tickets);
+    console.log('Payment Date:', this.paymentDate);
+    console.log('Card Owner:', this.cardOwner);
+    console.log('Total Price:', this.totalPrice);
     this.fetchTickets();
     this.submitRegistration();
     console.log('API Response:', this.response);

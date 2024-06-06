@@ -7,7 +7,7 @@
 
       <div class="ticket-div">
         <div>
-          <p> <span>ბილეთის ნომერი:</span> {{ tickets[0].id }}</p>
+          <!-- <p> <span>ბილეთის ნომერი:</span> {{ tickets[0].id }}</p> -->
         </div>
         <p> <span> გადახდის თარიღი:</span> {{ paymentDate | date: 'dd/MM/yyyy' }}</p>
       </div>
@@ -60,10 +60,10 @@
       </button>
     </div>
   </div>
-  <div class="cancelButton">
+  <!-- <div class="cancelButton">
     <button mat-raised-button color="warn" (click)="cancelTicket(tickets[0].id)">
       <i class="material-icons">cancel</i>
       Cancel Ticket
     </button>
-  </div>
+  </div> -->
 </div>
