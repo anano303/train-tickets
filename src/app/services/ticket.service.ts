@@ -15,4 +15,9 @@ export class TicketService {
     console.log(url);
     return this.http.get<ITickets[]>(url);
   }
+
+  cancelTicket(ticketId: string): Observable<any> {
+    const url = `${this.apiUrl}/tickets/cancel/${ticketId}`;
+    return this.http.post(url, {});
+  }
 }

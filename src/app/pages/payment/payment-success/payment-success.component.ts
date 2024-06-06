@@ -3,20 +3,13 @@ import { ITickets } from '../../../models/ticket.model';
 import { PaymentComponent } from '../payment.component';
 import { TicketService } from '../../../services/ticket.service';
 import { CommonModule } from '@angular/common';
-import { TrainService } from '../../../services/train.service';
-import { SeatsService } from '../../../services/seats.service';
-import { VagonService } from '../../../services/vagon.service';
-import { ISeat } from '../../../models/seats.model';
-import { IVagon } from '../../../models/vagon.model';
 import { ITrains } from '../../../models/train.model';
-import { response } from 'express';
 import { TicketRegistrationService } from '../../../services/ticket-registration.service';
 import { IRegistration } from '../../../models/registration.model';
 import { Router } from '@angular/router';
 import { SelectedTrainComponent } from '../../../shared/selected-train/selected-train.component';
 import jsPDF from 'jspdf';
-import { materialize } from 'rxjs';
-import { Html2CanvasOptions } from 'jspdf';
+
 import html2canvas from 'html2canvas';
 import { TrainSelectionService } from '../../../shared/trainSelectionService.service';
 
@@ -104,6 +97,18 @@ export class PaymentSuccessComponent {
     } else {
       console.error('Selected train is missing. Cannot submit registration.');
     }
+  }
+  cancelTicket(ticketId: string): void {
+    this.ticketService.cancelTicket(ticketId).subscribe(
+      (response) => {
+        console.log('Ticket cancelled successfully:', response);
+        alert('Ticket cancelled successfully.');
+      },
+      (error) => {
+        console.error('Error cancelling ticket:', error);
+        alert('Error cancelling ticket. Please try again.');
+      }
+    );
   }
 
   downloadPDF() {

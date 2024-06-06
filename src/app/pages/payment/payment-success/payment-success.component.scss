@@ -1,31 +1,43 @@
 .payment-succes {
-  display: flex;
-  gap: 10px;
   margin-top: 20px;
   margin-bottom: 40px;
-  .pdf {
-    margin-left: 90px;
-    border: 1px solid black;
-    padding: 40px;
-    margin-bottom: 90px;
-    h1 {
-      font-size: 24px;
-      color: #4caf50;
-      text-align: center;
-      margin-bottom: 20px;
-    }
+  h1 {
+    font-size: 24px;
+    color: #4caf50;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .firstDiv {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    .pdf {
+      margin-left: 90px;
+      border: 1px solid black;
+      padding: 40px;
+      margin-bottom: 90px;
 
-    .ticket-div {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding: 10px;
-      margin-bottom: 20px;
-      gap: 5vw;
+      .ticket-div {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 10px;
+        margin-bottom: 20px;
+        gap: 5vw;
 
-      div {
-        margin-bottom: 10px;
-        padding-bottom: 10px;
+        div {
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+
+          p {
+            font-size: 16px;
+            color: #333;
+
+            span {
+              font-weight: bold;
+            }
+          }
+        }
 
         p {
           font-size: 16px;
@@ -37,92 +49,83 @@
         }
       }
 
-      p {
-        font-size: 16px;
-        color: #333;
+      .train-info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
 
-        span {
-          font-weight: bold;
+        p {
+          font-size: 16px;
+          color: #333;
+          flex: 1;
+          margin-right: 10px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+
+          span {
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+          }
         }
       }
-    }
 
-    .train-info {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      border: 1px solid #e0e0e0;
-      padding: 10px;
-
-      p {
+      h3 {
         font-size: 16px;
         color: #333;
-        flex: 1;
-        margin-right: 10px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        span {
-          font-weight: bold;
-          display: block;
-          margin-top: 5px;
-        }
-      }
-    }
-
-    h3 {
-      font-size: 16px;
-      color: #333;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    .contact-info {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      border: 1px solid #e0e0e0;
-      padding: 10px;
-      margin-bottom: 20px;
-
-      p {
-        font-size: 16px;
-        color: #333;
-      }
-    }
-
-    .passengers {
-      display: flex;
-      justify-content: space-between;
-      column-gap: 2vh;
-      row-gap: 2vw;
-      flex-wrap: wrap;
-      border: 1px solid #e0e0e0;
-      padding: 10px;
-      margin-bottom: 10px;
-
-      p {
-        font-size: 16px;
-        color: #333;
-        margin-bottom: 5px;
-      }
-    }
-
-    > .card-owner {
-      margin-top: 80px;
-      border: 1px solid #e0e0e0;
-      padding: 10px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-wrap: wrap;
-
-      p {
-        font-size: 16px;
-        color: #333;
+        margin-bottom: 10px;
         font-weight: bold;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        margin-bottom: 20px;
+
+        p {
+          font-size: 16px;
+          color: #333;
+        }
+      }
+
+      .passengers {
+        display: flex;
+        justify-content: space-between;
+        column-gap: 2vh;
+        row-gap: 2vw;
+        flex-wrap: wrap;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        margin-bottom: 10px;
+
+        p {
+          font-size: 16px;
+          color: #333;
+          margin-bottom: 5px;
+        }
+      }
+
+      > .card-owner {
+        margin-top: 80px;
+        border: 1px solid #e0e0e0;
+        padding: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+
+        p {
+          font-size: 16px;
+          color: #333;
+          font-weight: bold;
+        }
       }
     }
   }
@@ -149,6 +152,38 @@
     transition: transform 0.2s ease-in-out;
     &:hover {
       transform: scale(1.1);
+    }
+  }
+}
+
+.cancelButton {
+  button {
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-align: center;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-left: 50px;
+    box-shadow: 5px 4px 7px 3px red;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    &:hover {
+      background: #ff3f00;
+      box-shadow: 5px 4px 7px 3px #ff3f00;
+      animation: hoverAnimation 0.6s ease-in-out 2;
+    }
+
+    @keyframes hoverAnimation {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
     }
   }
 }
