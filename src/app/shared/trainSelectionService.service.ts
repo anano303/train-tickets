@@ -5,13 +5,13 @@ import { ITrains } from '../models/train.model';
   providedIn: 'root',
 })
 export class TrainSelectionService {
-  private selectedTrain: ITrains | undefined;
+  private selectedTrain: ITrains | null = null;
 
   setSelectedTrain(train: ITrains): void {
     this.selectedTrain = train;
   }
 
-  getSelectedTrain(): ITrains | undefined {
+  getSelectedTrain(): ITrains | null {
     return this.selectedTrain;
   }
 }

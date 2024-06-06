@@ -64,6 +64,7 @@ export class PassengerDetailsComponent {
     private vagonService: VagonService,
     private route: ActivatedRoute,
     private router: Router,
+    private trainSelectionService: TrainSelectionService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.passengerForm = this.fb.group({
@@ -189,17 +190,12 @@ export class PassengerDetailsComponent {
       const phone = this.passengerForm.value.phone;
       const totalPrice = this.invoiceComponent.totalPrice;
 
-      // if (isPlatformBrowser(this.platformId)) {
-      //   localStorage.removeItem('passengerForm');
-      //   localStorage.removeItem('selectedTrain');
-      //   localStorage.removeItem('numberOfPassengers');
-      // }
-
       this.router.navigate(['/payment'], {
         state: {
           totalPrice,
-          selectedTrain: this.selectedTrain,
+          train: this.selectedTrain,
           passengerForm: this.passengerForm.value,
+          numberOfPassengers: this.numberOfPassengers,
         },
       });
     } else {

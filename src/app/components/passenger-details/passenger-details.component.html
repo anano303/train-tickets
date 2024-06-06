@@ -52,6 +52,9 @@
       </div>
       <!-- <button type="submit">Submit</button> -->
     </form>
+    <div *ngIf="!selectedTrain">
+      <p>No train selected. Please go back and select a train.</p>
+    </div>
     <!-- Class selection modal -->
     <div class="modal" [style.display]="showModal ? 'block' : 'none'">
       <div class="modal-content">

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { IVagon } from '../../models/vagon.model';
 import { ISeat } from '../../models/seats.model';
 import { ITrains } from '../../models/train.model';
+import { TrainSelectionService } from '../../shared/trainSelectionService.service';
 // import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 // import { ITickets } from '../../models/ticket.model';

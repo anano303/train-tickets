@@ -14,6 +14,9 @@ import { TicketRegistrationService } from '../../services/ticket-registration.se
 import { response } from 'express';
 import { IRegistration } from '../../models/registration.model';
 import { TrainSelectionService } from '../../shared/trainSelectionService.service';
+import { IVagon } from '../../models/vagon.model';
+import { TicketService } from '../../services/ticket.service';
+import { ITickets } from '../../models/ticket.model';
 
 @Component({
   selector: 'app-payment',
@@ -28,20 +31,25 @@ import { TrainSelectionService } from '../../shared/trainSelectionService.servic
   styleUrls: ['./payment.component.scss'],
 })
 export class PaymentComponent {
+  @Input() trains: ITrains[] = [];
+  @Input() numberOfPassengers!: number;
+  @Input() vagon: IVagon[] = [];
+
   passengerForm!: FormGroup;
   showPaymentForm: boolean = true;
   paymentForm: FormGroup;
   totalPrice!: number; // Example total price, you can pass this as an @Input() from the parent component
   selectedTrain: ITrains | null = null;
   // @Input() selectedTrain!: ITrains;
-  @Input() numberOfPassengers!: number; // Define numberOfPassengers
   paymentSuccess: boolean = false; // or false, depending on your logic
   paymentDate: any;
   passengerData: any;
+  firstTicketDate: string = '';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private ticketService: TicketService,
     private ticketRegistrationService: TicketRegistrationService,
     private trainSelectionService: TrainSelectionService
   ) {
@@ -73,6 +81,8 @@ export class PaymentComponent {
   }
 
   ngOnInit(): void {
+    this.selectedTrain = this.trainSelectionService.getSelectedTrain();
+    console.log('Selected Train in Payment:', this.selectedTrain);
     if (typeof localStorage !== 'undefined') {
       const savedPaymentForm = localStorage.getItem('paymentForm');
       const savedTotalPrice = localStorage.getItem('totalPrice');
@@ -88,6 +98,11 @@ export class PaymentComponent {
         this.passengerData = JSON.parse(savedPassengerData);
       }
     }
+    this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
+      if (tickets.length > 0 && tickets[0].date) {
+        this.firstTicketDate = tickets[0].date;
+      }
+    });
   }
 
   onSubmit(): void {
@@ -126,7 +141,7 @@ export class PaymentComponent {
                 passengerData: this.passengerData,
                 cardOwner: paymentData.cardOwner,
                 totalPrice: this.totalPrice,
-                // selectedTrain: this.selectedTrain, // Remove if not needed
+                selectedTrain: this.selectedTrain, // Remove if not needed
               },
             });
           },
