@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
+import { PassengerDetailsComponent } from '../../pages/passenger-details/passenger-details.component';
 import {
   AbstractControl,
   FormArray,

@@ -18,7 +18,7 @@ import { RouterOutlet, ActivatedRoute, Router } from '@angular/router';
 import { SeatsService } from '../../services/seats.service';
 import { ITrains } from '../../models/train.model';
 import { ISeat } from '../../models/seats.model';
-import { InvoiceComponent } from '../invoice/invoice.component';
+import { InvoiceComponent } from '../../components/invoice/invoice.component';
 import { VagonService } from '../../services/vagon.service';
 import { IVagon } from '../../models/vagon.model';
 import { TrainSelectionService } from '../../shared/trainSelectionService.service';

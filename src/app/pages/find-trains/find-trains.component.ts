@@ -4,7 +4,7 @@ import { DepartureService } from '../../services/departure.service';
 import { IDepartures } from '../../models/departure.model';
 import { CommonModule } from '@angular/common';
 import { ITrains } from '../../models/train.model';
-import { PassengerDetailsComponent } from '../../components/passenger-details/passenger-details.component';
+import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 import { TrainSelectionService } from '../../shared/trainSelectionService.service';
 
 @Component({
@@ -37,16 +37,33 @@ export class FindTrainsComponent {
   }
 
   fetchDepartures(from: string, to: string, date: string): void {
+    const selectedDate = new Date(date);
+    const weekdays = [
+      'კვირა',
+      'ორშაბათი',
+      'სამშაბათი',
+      'ოთხშაბათი',
+      'ხუთშაბათი',
+      'პარასკევი',
+      'შაბათი',
+    ];
+    const selectedWeekday = weekdays[selectedDate.getDay()];
+
     this.departureService.getDepartures(from, to, date).subscribe(
       (data: IDepartures[]) => {
         this.trains = [];
         data
           .filter(
             (departure) =>
-              departure.source === from && departure.destination === to
+              departure.source === from &&
+              departure.destination === to &&
+              departure.trains.some((train) => train.date === selectedWeekday)
           )
           .forEach((departure) => {
-            this.trains.push(...departure.trains);
+            const filteredTrains = departure.trains.filter(
+              (train) => train.date === selectedWeekday
+            );
+            this.trains.push(...filteredTrains);
           });
       },
       (error) => {
@@ -54,10 +71,9 @@ export class FindTrainsComponent {
       }
     );
   }
+  ngOnInit(): void {}
 
   bookTrain(train: ITrains): void {
-    console.log('Selected train:', train);
-    console.log('Number of passengers:', this.passengers);
     this.trainSelectionService.setSelectedTrain(train);
     this.router.navigate(['/passenger-details'], {
       state: { train: train, numberOfPassengers: this.passengers },

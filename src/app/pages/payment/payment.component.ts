@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ITrains } from '../../models/train.model';
-import { PassengerDetailsComponent } from '../../components/passenger-details/passenger-details.component';
+import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { TicketRegistrationService } from '../../services/ticket-registration.service';
 import { response } from 'express';
@@ -38,10 +38,10 @@ export class PaymentComponent {
   passengerForm!: FormGroup;
   showPaymentForm: boolean = true;
   paymentForm: FormGroup;
-  totalPrice!: number; // Example total price, you can pass this as an @Input() from the parent component
+  totalPrice!: number;
   selectedTrain: ITrains | null = null;
-  // @Input() selectedTrain!: ITrains;
-  paymentSuccess: boolean = false; // or false, depending on your logic
+
+  paymentSuccess: boolean = false;
   paymentDate: any;
   passengerData: any;
   firstTicketDate: string = '';

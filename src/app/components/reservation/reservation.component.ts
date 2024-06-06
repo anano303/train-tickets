@@ -9,6 +9,7 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
+import { TrainSelectionService } from '../../shared/trainSelectionService.service';
 
 @Component({
   selector: 'app-reservation',
@@ -16,7 +17,6 @@ import {
   imports: [
     FormsModule,
     CommonModule,
-
     RouterOutlet,
     RouterLinkActive,
     RouterLink,
@@ -37,7 +37,8 @@ export class ReservationComponent {
 
   constructor(
     private router: Router,
-    private departureService: DepartureService
+    private departureService: DepartureService,
+    private trainSelectionService: TrainSelectionService
   ) {}
   ngOnInit(): void {
     const today = new Date();
@@ -66,6 +67,8 @@ export class ReservationComponent {
             state: { ...this.trainsData },
           });
         });
+      this.trainSelectionService.setTrainsData(this.trainsData);
+      this.trainSelectionService.setFormattedDate(selectedDate);
     } else {
       alert('გთხოვთ შეავსოთ სრული ინფორმაცია');
     }

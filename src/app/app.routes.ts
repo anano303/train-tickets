@@ -3,7 +3,7 @@ import { FindTrainsComponent } from './pages/find-trains/find-trains.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AppComponent } from './app.component';
 import { LayoutsComponent } from './components/layouts/layouts.component';
-import { PassengerDetailsComponent } from './components/passenger-details/passenger-details.component';
+import { PassengerDetailsComponent } from './pages/passenger-details/passenger-details.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 
 export const routes: Routes = [

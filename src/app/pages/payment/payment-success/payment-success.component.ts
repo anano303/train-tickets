@@ -35,12 +35,13 @@ export class PaymentSuccessComponent {
   @Input() passengerData!: any;
   @Input() cardOwner!: string;
   @Input() totalPrice!: number;
-  // @Input() selectedTrain!: string;//
+
   selectedTrain: ITrains | null = null;
   tickets: ITickets[] = [];
   response: any;
   numberOfPassengers: number = 1;
-  firstTicketDate: string = '';
+  selectedData: any;
+  formattedDate: string = '';
 
   constructor(
     private ticketService: TicketService,
@@ -60,23 +61,15 @@ export class PaymentSuccessComponent {
       this.numberOfPassengers =
         navigation.extras.state['numberOfPassengers'] || 1;
       console.log('State:', state);
-    } else {
-      console.log('Total Price:', this.totalPrice);
-      console.log('Card Owner:', this.cardOwner);
-      console.error('selectedTrain in success', this.selectedTrain);
     }
   }
   ngOnInit(): void {
     this.selectedTrain = this.trainSelectionService.getSelectedTrain();
+    this.formattedDate = this.trainSelectionService.getFormattedDate();
     console.log('Selected Train in Payment:', this.selectedTrain);
     this.fetchTickets();
     this.submitRegistration();
     console.log('API Response:', this.response);
-    this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
-      if (tickets.length > 0 && tickets[0].date) {
-        this.firstTicketDate = tickets[0].date;
-      }
-    });
   }
 
   fetchTickets() {
