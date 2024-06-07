@@ -12,10 +12,12 @@
     gap: 10px;
     justify-content: center;
     .pdf {
+      position: relative;
       margin-left: 90px;
       border: 1px solid black;
       padding: 40px;
       margin-bottom: 90px;
+      background: #f4f4f7;
 
       .ticket-div {
         display: flex;
@@ -23,7 +25,7 @@
         flex-wrap: wrap;
         padding: 10px;
         margin-bottom: 20px;
-        gap: 5vw;
+        column-gap: 5vw;
 
         div {
           margin-bottom: 10px;
@@ -120,6 +122,9 @@
         margin-bottom: 20px;
         display: flex;
         flex-wrap: wrap;
+        gap: 40px;
+        text-align: center;
+        align-items: center;
 
         p {
           font-size: 16px;
@@ -129,7 +134,16 @@
       }
     }
   }
+  .stamp {
+    img {
+      width: 200px;
+      position: absolute;
+      bottom: 20%;
+      right: 10%;
+    }
+  }
 }
+
 .action-buttons {
   display: flex;
   flex-direction: column;
@@ -157,6 +171,7 @@
 }
 
 .cancelButton {
+  cursor: pointer;
   button {
     background-color: red;
     border: none;
@@ -169,11 +184,13 @@
     margin-left: 50px;
     box-shadow: 5px 4px 7px 3px red;
     font-weight: bold;
+    cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     &:hover {
       background: #ff3f00;
       box-shadow: 5px 4px 7px 3px #ff3f00;
       animation: hoverAnimation 0.6s ease-in-out 2;
+      cursor: pointer;
     }
 
     @keyframes hoverAnimation {
@@ -185,5 +202,36 @@
         transform: scale(1.05);
       }
     }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .stamp {
+    img {
+      width: 120px !important;
+      bottom: 25% !important;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .firstDiv {
+    flex-direction: column;
+    margin: 5px;
+    .pdf {
+      flex-direction: column;
+      margin-left: 1px !important;
+      margin-bottom: 30px !important;
+      margin: 5px;
+    }
+  }
+
+  .action-buttons {
+    flex-direction: row;
+    margin: 20px 50px !important;
+    gap: 40px;
+  }
+
+  .cancelButton{
+    margin-top:30px;
   }
 }

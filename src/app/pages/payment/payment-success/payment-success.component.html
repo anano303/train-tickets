@@ -7,7 +7,7 @@
 
       <div class="ticket-div">
         <div>
-          <!-- <p> <span>ბილეთის ნომერი:</span> {{ tickets[0].id }}</p> -->
+          <p> <span>ბილეთის ნომერი:</span> {{ tickets[0].id }}</p>
         </div>
         <p> <span> გადახდის თარიღი:</span> {{ paymentDate | date: 'dd/MM/yyyy' }}</p>
       </div>
@@ -44,6 +44,9 @@
         <h3>სულ გადასახდელი</h3> <!-- Add Total Price Information -->
         <p>{{ totalPrice }}₾</p>
       </div>
+      <div class="stamp">
+        <img src="../../../../assets/stamp.jpg" alt="stamp">
+      </div>
       <p style="font-style: italic; margin-top: 90px;"> ინვოისი იქმნება კომპიუტერის მიერ და ვალიდურია ბეჭდის და
         ხელმოწერის
         გარეშე</p>
@@ -60,10 +63,10 @@
       </button>
     </div>
   </div>
-  <!-- <div class="cancelButton">
+  <div class="cancelButton">
     <button mat-raised-button color="warn" (click)="cancelTicket(tickets[0].id)">
       <i class="material-icons">cancel</i>
       Cancel Ticket
     </button>
-  </div> -->
+  </div>
 </div>
