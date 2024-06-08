@@ -9,7 +9,6 @@ import { IRegistration } from '../../../models/registration.model';
 import { Router } from '@angular/router';
 import { SelectedTrainComponent } from '../../../shared/selected-train/selected-train.component';
 import jsPDF from 'jspdf';
-
 import html2canvas from 'html2canvas';
 import { TrainSelectionService } from '../../../shared/trainSelectionService.service';
 
@@ -20,7 +19,7 @@ declare var html2pdf: any;
   standalone: true,
   imports: [PaymentComponent, CommonModule, SelectedTrainComponent],
   templateUrl: './payment-success.component.html',
-  styleUrl: './payment-success.component.scss',
+  styleUrls: ['./payment-success.component.scss'],
 })
 export class PaymentSuccessComponent {
   @Input() trains: ITrains[] = [];
@@ -33,7 +32,6 @@ export class PaymentSuccessComponent {
   tickets: ITickets[] = [];
   response: any;
   numberOfPassengers: number = 1;
-  selectedData: any;
   formattedDate: string = '';
   vagonId: string | null = null;
 
@@ -48,29 +46,24 @@ export class PaymentSuccessComponent {
       const state = navigation.extras.state as { [key: string]: any };
 
       this.vagonId = state['vagonId'] || null;
-      this.selectedTrain = navigation.extras.state['selectedTrain'];
+      this.selectedTrain = state['selectedTrain'];
       this.response = state['response'];
-      this.paymentDate = navigation.extras.state['passengerForm'];
-      this.passengerData = navigation.extras.state['passengerData'];
-      this.cardOwner = navigation.extras.state['cardOwner'];
-      this.totalPrice = navigation.extras.state['totalPrice'];
-      this.numberOfPassengers =
-        navigation.extras.state['numberOfPassengers'] || 1;
+      this.paymentDate = state['paymentDate'];
+      this.passengerData = state['passengerData'];
+      this.cardOwner = state['cardOwner'];
+      this.totalPrice = state['totalPrice'];
+      this.numberOfPassengers = state['numberOfPassengers'] || 1;
       console.log('State:', state);
     }
   }
+
   ngOnInit(): void {
     this.selectedTrain = this.trainSelectionService.getSelectedTrain();
     this.formattedDate = this.trainSelectionService.getFormattedDate();
-    console.log('Selected Train in Payment:', this.selectedTrain);
-    console.log('Passenger Data:', this.passengerData);
-    console.log('Tickets:', this.tickets);
-    console.log('Payment Date:', this.paymentDate);
-    console.log('Card Owner:', this.cardOwner);
-    console.log('Total Price:', this.totalPrice);
+
+    console.log('formatdata', this.formattedDate);
     this.fetchTickets();
     this.submitRegistration();
-    console.log('API Response:', this.response);
   }
 
   fetchTickets() {
@@ -79,6 +72,7 @@ export class PaymentSuccessComponent {
       console.log(tickets);
     });
   }
+
   submitRegistration() {
     if (this.selectedTrain) {
       const registrationData: IRegistration = {
@@ -106,6 +100,7 @@ export class PaymentSuccessComponent {
       console.error('Selected train is missing. Cannot submit registration.');
     }
   }
+
   cancelTicket(ticketId: string): void {
     this.ticketService.cancelTicket(ticketId).subscribe(
       (response) => {

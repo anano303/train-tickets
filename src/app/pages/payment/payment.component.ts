@@ -18,6 +18,14 @@ import { IVagon } from '../../models/vagon.model';
 import { TicketService } from '../../services/ticket.service';
 import { ITickets } from '../../models/ticket.model';
 
+interface Passenger {
+  name: string;
+  surname: string;
+  privateNumber: string;
+  seat: string;
+  seatId: string;
+  vagonId: string;
+}
 @Component({
   selector: 'app-payment',
   standalone: true,
@@ -45,6 +53,7 @@ export class PaymentComponent {
   paymentDate: any;
   passengerData: any;
   firstTicketDate: string = '';
+  vagonId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +68,8 @@ export class PaymentComponent {
       this.totalPrice = state['totalPrice'] || 0; // Use bracket notation to access totalPrice
       this.passengerData = state['passengerForm'] || {};
       this.selectedTrain = state['train'] || null;
+      const passengers: Passenger[] = state['passengerData'] || [];
+      // vagonId = passengers.map(passenger => passenger.vagonId) || null;
       console.log('Selected Train in Payment:', this.selectedTrain);
       console.log('State:', state);
     }
@@ -101,6 +112,7 @@ export class PaymentComponent {
     this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
       if (tickets.length > 0 && tickets[0].date) {
         this.firstTicketDate = tickets[0].date;
+        console.log('fistr  data', this.firstTicketDate);
       }
     });
   }
@@ -142,6 +154,7 @@ export class PaymentComponent {
                 cardOwner: paymentData.cardOwner,
                 totalPrice: this.totalPrice,
                 selectedTrain: this.selectedTrain, // Remove if not needed
+                vagonId: this.vagonId,
               },
             });
           },
