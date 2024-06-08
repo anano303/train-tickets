@@ -55,7 +55,7 @@ export class TrainSelectionService {
     const dayNumber = date.getDate();
     const monthName = months[date.getMonth()];
 
-    this.formattedDate = `${dayName}, ${dayNumber} ${monthName}`;
+    this.formattedDate = `${dayName} ${dayNumber} ${monthName}`;
   }
 
   // Get formatted date
