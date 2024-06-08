@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TicketRegistrationService {
   private apiUrl = 'https://railway.stepprojects.ge/api';
+
   constructor(private http: HttpClient) {}
 
   postTicketRegistration(

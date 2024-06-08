@@ -2,6 +2,7 @@
   <div class="payment-box" *ngIf="showPaymentForm">
     <h3>სულ გადასახდელი: {{ totalPrice }} ₾</h3>
 
+
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="cardNumber">Credit Card Number</label>

@@ -29,6 +29,7 @@ const sort: Record<string, number> = {
   'II კლასი': 2,
   ბიზნესი: 3,
 };
+
 @Component({
   selector: 'app-passenger-details',
   standalone: true,
@@ -92,6 +93,7 @@ export class PassengerDetailsComponent {
       }
     }
   }
+
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const savedPassengerForm = localStorage.getItem('passengerForm');
@@ -149,6 +151,8 @@ export class PassengerDetailsComponent {
       seat: ['', Validators.required],
       name: ['', Validators.required],
       surname: ['', Validators.required],
+      seatId: ['', Validators.required], // Add seatId field
+      vagonId: ['', Validators.required],
       privateNumber: ['', [Validators.required, Validators.minLength(9)]],
     });
   }
@@ -173,11 +177,12 @@ export class PassengerDetailsComponent {
   selectSeat(seat: ISeat): void {
     this.seat = seat;
     if (!seat.isOccupied && this.selectedPassengerIndex !== null) {
-      this.passengers
-        .at(this.selectedPassengerIndex)
-        .get('seat')
-        ?.setValue(seat.number);
+      const passengerGroup = this.passengers.at(this.selectedPassengerIndex);
+      passengerGroup.get('seat')?.setValue(seat.number);
+      passengerGroup.get('seatId')?.setValue(seat.seatId); // Set seatId
+      passengerGroup.get('vagonId')?.setValue(seat.vagonId); // Set vagonId correctly from seat.vagonId
       this.showSeats = false;
+      console.log('vagonId', seat.vagonId);
     } else {
       alert('This seat is occupied. Please choose another seat.');
     }
@@ -196,6 +201,7 @@ export class PassengerDetailsComponent {
           train: this.selectedTrain,
           passengerForm: this.passengerForm.value,
           numberOfPassengers: this.numberOfPassengers,
+          passengerData: passengers,
         },
       });
     } else {

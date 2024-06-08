@@ -35,6 +35,7 @@ export class PaymentSuccessComponent {
   numberOfPassengers: number = 1;
   selectedData: any;
   formattedDate: string = '';
+  vagonId: string | null = null;
 
   constructor(
     private ticketService: TicketService,
@@ -45,6 +46,8 @@ export class PaymentSuccessComponent {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       const state = navigation.extras.state as { [key: string]: any };
+
+      this.vagonId = state['vagonId'] || null;
       this.selectedTrain = navigation.extras.state['selectedTrain'];
       this.response = state['response'];
       this.paymentDate = navigation.extras.state['passengerForm'];
