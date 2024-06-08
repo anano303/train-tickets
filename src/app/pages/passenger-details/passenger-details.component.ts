@@ -94,39 +94,39 @@ export class PassengerDetailsComponent {
     }
   }
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const savedPassengerForm = localStorage.getItem('passengerForm');
-      const savedSelectedTrain = localStorage.getItem('selectedTrain');
-      const savedNumberOfPassengers =
-        localStorage.getItem('numberOfPassengers');
+  // ngOnInit(): void {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     const savedPassengerForm = localStorage.getItem('passengerForm');
+  //     const savedSelectedTrain = localStorage.getItem('selectedTrain');
+  //     const savedNumberOfPassengers =
+  //       localStorage.getItem('numberOfPassengers');
 
-      if (savedPassengerForm) {
-        this.passengerForm.setValue(JSON.parse(savedPassengerForm));
-      }
-      if (savedSelectedTrain) {
-        this.selectedTrain = JSON.parse(savedSelectedTrain);
-      }
-      if (savedNumberOfPassengers) {
-        this.numberOfPassengers = JSON.parse(savedNumberOfPassengers);
-        this.initPassengers();
-      }
-    }
-  }
+  //     if (savedPassengerForm) {
+  //       this.passengerForm.setValue(JSON.parse(savedPassengerForm));
+  //     }
+  //     if (savedSelectedTrain) {
+  //       this.selectedTrain = JSON.parse(savedSelectedTrain);
+  //     }
+  //     if (savedNumberOfPassengers) {
+  //       this.numberOfPassengers = JSON.parse(savedNumberOfPassengers);
+  //       this.initPassengers();
+  //     }
+  //   }
+  // }
 
-  ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(
-        'passengerForm',
-        JSON.stringify(this.passengerForm.value)
-      );
-      localStorage.setItem('selectedTrain', JSON.stringify(this.selectedTrain));
-      localStorage.setItem(
-        'numberOfPassengers',
-        JSON.stringify(this.numberOfPassengers)
-      );
-    }
-  }
+  // ngOnDestroy(): void {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     localStorage.setItem(
+  //       'passengerForm',
+  //       JSON.stringify(this.passengerForm.value)
+  //     );
+  //     localStorage.setItem('selectedTrain', JSON.stringify(this.selectedTrain));
+  //     localStorage.setItem(
+  //       'numberOfPassengers',
+  //       JSON.stringify(this.numberOfPassengers)
+  //     );
+  //   }
+  // }
 
   initVagons() {
     this.vagonService.getVagons().subscribe((vagons: IVagon[]) => {

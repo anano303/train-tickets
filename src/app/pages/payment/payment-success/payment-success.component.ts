@@ -61,7 +61,6 @@ export class PaymentSuccessComponent {
     this.selectedTrain = this.trainSelectionService.getSelectedTrain();
     this.formattedDate = this.trainSelectionService.getFormattedDate();
 
-    console.log('formatdata', this.formattedDate);
     this.fetchTickets();
     this.submitRegistration();
   }
@@ -69,7 +68,6 @@ export class PaymentSuccessComponent {
   fetchTickets() {
     this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
       this.tickets = tickets;
-      console.log(tickets);
     });
   }
 
