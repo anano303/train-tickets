@@ -9,23 +9,10 @@ import {
 import { Router } from '@angular/router';
 import { ITrains } from '../../models/train.model';
 import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
-import { PaymentSuccessComponent } from './payment-success/payment-success.component';
-import { TicketRegistrationService } from '../../services/ticket-registration.service';
-import { response } from 'express';
-import { IRegistration } from '../../models/registration.model';
 import { TrainSelectionService } from '../../shared/trainSelectionService.service';
 import { IVagon } from '../../models/vagon.model';
-import { TicketService } from '../../services/ticket.service';
-import { ITickets } from '../../models/ticket.model';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 
-interface Passenger {
-  name: string;
-  surname: string;
-  privateNumber: string;
-  seat: string;
-  seatId: string;
-  vagonId: string;
-}
 @Component({
   selector: 'app-payment',
   standalone: true,
@@ -52,14 +39,11 @@ export class PaymentComponent {
   paymentSuccess: boolean = false;
   paymentDate: any;
   passengerData: any;
-  firstTicketDate: string = '';
   vagonId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private ticketService: TicketService,
-    private ticketRegistrationService: TicketRegistrationService,
     private trainSelectionService: TrainSelectionService
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -68,9 +52,7 @@ export class PaymentComponent {
       this.totalPrice = state['totalPrice'] || 0; // Use bracket notation to access totalPrice
       this.passengerData = state['passengerForm'] || {};
       this.selectedTrain = state['train'] || null;
-      const passengers: Passenger[] = state['passengerData'] || [];
-      // vagonId = passengers.map(passenger => passenger.vagonId) || null;
-      console.log('Selected Train in Payment:', this.selectedTrain);
+      // const passengers: Passenger[] = state['passengerData'] || [];
       console.log('State:', state);
     }
 
@@ -94,27 +76,21 @@ export class PaymentComponent {
   ngOnInit(): void {
     this.selectedTrain = this.trainSelectionService.getSelectedTrain();
     console.log('Selected Train in Payment:', this.selectedTrain);
-    if (typeof localStorage !== 'undefined') {
-      const savedPaymentForm = localStorage.getItem('paymentForm');
-      const savedTotalPrice = localStorage.getItem('totalPrice');
-      const savedPassengerData = localStorage.getItem('passengerData');
+    // if (typeof localStorage !== 'undefined') {
+    //   const savedPaymentForm = localStorage.getItem('paymentForm');
+    //   const savedTotalPrice = localStorage.getItem('totalPrice');
+    //   const savedPassengerData = localStorage.getItem('passengerData');
 
-      if (savedPaymentForm) {
-        this.paymentForm.setValue(JSON.parse(savedPaymentForm));
-      }
-      if (savedTotalPrice) {
-        this.totalPrice = JSON.parse(savedTotalPrice);
-      }
-      if (savedPassengerData) {
-        this.passengerData = JSON.parse(savedPassengerData);
-      }
-    }
-    this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
-      if (tickets.length > 0 && tickets[0].date) {
-        this.firstTicketDate = tickets[0].date;
-        console.log('fistr  data', this.firstTicketDate);
-      }
-    });
+    //   if (savedPaymentForm) {
+    //     this.paymentForm.setValue(JSON.parse(savedPaymentForm));
+    //   }
+    //   if (savedTotalPrice) {
+    //     this.totalPrice = JSON.parse(savedTotalPrice);
+    //   }
+    //   if (savedPassengerData) {
+    //     this.passengerData = JSON.parse(savedPassengerData);
+    //   }
+    // }
   }
 
   onSubmit(): void {
@@ -124,46 +100,14 @@ export class PaymentComponent {
       this.paymentDate = new Date();
       this.paymentSuccess = true;
 
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('paymentForm', JSON.stringify(paymentData));
-        localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
-        localStorage.setItem(
-          'passengerData',
-          JSON.stringify(this.passengerData)
-        );
-      }
-
-      const registrationData: IRegistration = {
-        trainId: this.selectedTrain ? this.selectedTrain.id : 0, // Remove or handle trainId if needed
-        date: new Date().toISOString(),
-        email: this.passengerData.email,
-        phoneNumber: this.passengerData.phone,
-        people: this.passengerData.passengers,
-      };
-
-      this.ticketRegistrationService
-        .postTicketRegistration(registrationData)
-        .subscribe(
-          (response) => {
-            console.log('Tickets registered successfully:', response);
-            this.router.navigate(['/payment-success'], {
-              state: {
-                response,
-                paymentDate: this.paymentDate,
-                passengerData: this.passengerData,
-                cardOwner: paymentData.cardOwner,
-                totalPrice: this.totalPrice,
-                selectedTrain: this.selectedTrain, // Remove if not needed
-                vagonId: this.vagonId,
-              },
-            });
-          },
-          (error) => {
-            console.error('Error registering tickets:', error);
-          }
-        );
-    } else {
-      alert('Please fill out the form correctly.');
+      // if (typeof localStorage !== 'undefined') {
+      //   localStorage.setItem('paymentForm', JSON.stringify(paymentData));
+      //   localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
+      //   localStorage.setItem(
+      //     'passengerData',
+      //     JSON.stringify(this.passengerData)
+      //   );
+      // }
     }
   }
 }

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PassengerDetailsComponent } from '../../pages/passenger-details/passenger-details.component';
 import {
   AbstractControl,
   FormArray,
@@ -10,20 +9,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IVagon } from '../../models/vagon.model';
 import { ISeat } from '../../models/seats.model';
 import { ITrains } from '../../models/train.model';
-import { TrainSelectionService } from '../../shared/trainSelectionService.service';
-// import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
-// import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
-// import { ITickets } from '../../models/ticket.model';
 
 type SeatClass = 'first' | 'second' | 'third';
 
 @Component({
   selector: 'app-invoice',
   standalone: true,
-  imports: [CommonModule, PassengerDetailsComponent, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss'],
 })
@@ -75,7 +69,7 @@ export class InvoiceComponent {
   getPassengerPrice(passenger: AbstractControl): number {
     const passengerFormGroup = passenger as FormGroup;
     const seat = passengerFormGroup.get('seat')?.value;
-    return this.seat.price || 0;
+    return this.seat?.price || 0;
   }
 
   get passengers(): FormArray {
