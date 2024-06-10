@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ITrains } from '../../../models/train.model';
 import { TicketRegistrationService } from '../../../services/ticket-registration.service';
 import { IRegistration } from '../../../models/registration.model';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { SelectedTrainComponent } from '../../../shared/selected-train/selected-train.component';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -27,13 +27,15 @@ export class PaymentSuccessComponent {
   @Input() passengerData!: any;
   @Input() cardOwner!: string;
   @Input() totalPrice!: number;
+  @Input() tickets: ITickets[] = [];
 
   selectedTrain: ITrains | null = null;
-  tickets: ITickets[] = [];
+  // tickets: ITickets[] = [];
   response: any;
   numberOfPassengers: number = 1;
   formattedDate: string = '';
   vagonId: string | null = null;
+  ticketId: string | null = null;
 
   constructor(
     private ticketService: TicketService,
@@ -45,6 +47,7 @@ export class PaymentSuccessComponent {
     if (navigation?.extras.state) {
       const state = navigation.extras.state as { [key: string]: any };
 
+      this.ticketId = state['ticketId'] || null;
       this.vagonId = state['vagonId'] || null;
       this.selectedTrain = state['selectedTrain'];
       this.response = state['response'];
@@ -55,45 +58,52 @@ export class PaymentSuccessComponent {
       this.numberOfPassengers = state['numberOfPassengers'] || 1;
       console.log('State:', state);
     }
-  }
 
-  ngOnInit(): void {
     this.selectedTrain = this.trainSelectionService.getSelectedTrain();
     this.formattedDate = this.trainSelectionService.getFormattedDate();
 
     this.fetchTickets();
-    this.submitRegistration();
   }
+
+  ngOnInit(): void {}
 
   fetchTickets() {
     this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
       this.tickets = tickets;
+      if (this.tickets.length > 0) {
+        this.ticketId = this.tickets[0].persons[0].ticketId; // Assign the ticket ID
+        this.submitRegistration(this.ticketId); // Pass the ticket ID to submitRegistration
+      }
     });
   }
 
-  submitRegistration() {
+  submitRegistration(ticketId: string) {
     if (this.selectedTrain) {
       const registrationData: IRegistration = {
         trainId: this.selectedTrain.id,
+        ticketId: ticketId,
         date: new Date().toISOString(),
         email: this.passengerData.email,
         phoneNumber: this.passengerData.phone,
         people: this.passengerData.passengers,
       };
-
-      this.ticketRegistrationService
-        .postTicketRegistration(registrationData)
-        .subscribe(
-          (response) => {
-            console.log('Registration data submitted successfully:', response);
-          },
-          (error) => {
-            console.error(
-              'Error occurred while submitting registration data:',
-              error
-            );
-          }
-        );
+      console.log('tocket id', ticketId),
+        this.ticketRegistrationService
+          .postTicketRegistration(registrationData)
+          .subscribe(
+            (response) => {
+              console.log(
+                'Registration data submitted successfully:',
+                response
+              );
+            },
+            (error) => {
+              console.error(
+                'Error occurred while submitting registration data:',
+                error
+              );
+            }
+          );
     } else {
       console.error('Selected train is missing. Cannot submit registration.');
     }
@@ -103,10 +113,24 @@ export class PaymentSuccessComponent {
     this.ticketService.cancelTicket(ticketId).subscribe(
       (response) => {
         console.log('Ticket cancelled successfully:', response);
-        alert('Ticket cancelled successfully.');
+        const navigationExtras: NavigationExtras = {
+          state: {
+            response: response,
+          },
+        };
+        this.router.navigate(['/cancel-ticket'], navigationExtras);
       },
       (error) => {
         console.error('Error cancelling ticket:', error);
+        console.log('Error Details:', {
+          status: error.status,
+          statusText: error.statusText,
+          url: error.url,
+          headers: error.headers,
+          message: error.message,
+          name: error.name,
+          ok: error.ok,
+        });
         alert('Error cancelling ticket. Please try again.');
       }
     );

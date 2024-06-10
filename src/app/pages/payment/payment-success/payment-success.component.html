@@ -8,7 +8,8 @@
       <div class="ticket-div">
         <div>
           <p *ngIf="tickets && tickets.length > 0">
-            <span>ბილეთის ნომერი:</span> {{ tickets[0].id }}
+            <span>ბილეთის ნომერი:</span> {{ tickets[0].persons[0].ticketId }}
+
           </p>
           <p *ngIf="!tickets || tickets.length === 0">No tickets available</p>
 
@@ -37,6 +38,7 @@
         <p>პირადი ნომერი: {{ passenger.privateNumber }}</p>
         <p>ადგილი: {{ passenger.seat }}</p>
         <p>ვაგონი: {{ passenger.vagonId }}</p>
+
 
 
         <!-- <p>ვაგონის N: {{ passenger.vagonId }}</p> -->

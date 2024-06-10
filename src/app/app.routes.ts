@@ -32,6 +32,14 @@ export const routes: Routes = [
             (m) => m.PaymentComponent
           ),
       },
+      
+      {
+        path: 'cancel-ticket',
+        loadComponent: () =>
+          import('./pages/cancel-ticket/cancel-ticket.component').then(
+            (m) => m.CancelTicketComponent
+          ),
+      },
       {
         path: '**',
         redirectTo: '/',

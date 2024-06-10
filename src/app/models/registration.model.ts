@@ -2,6 +2,7 @@ import { TicketRegistrationService } from '../services/ticket-registration.servi
 
 export interface IRegistration {
   trainId: number;
+  ticketId: string;
   date: string;
   email: string;
   phoneNumber: string;

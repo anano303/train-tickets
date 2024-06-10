@@ -6,12 +6,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ITrains } from '../../models/train.model';
 import { PassengerDetailsComponent } from '../passenger-details/passenger-details.component';
 import { TrainSelectionService } from '../../shared/trainSelectionService.service';
 import { IVagon } from '../../models/vagon.model';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import { TicketService } from '../../services/ticket.service';
 
 @Component({
   selector: 'app-payment',
@@ -44,7 +45,9 @@ export class PaymentComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private trainSelectionService: TrainSelectionService
+    private trainSelectionService: TrainSelectionService,
+    private ticketService: TicketService,
+    private route: ActivatedRoute
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -99,6 +102,10 @@ export class PaymentComponent {
       this.showPaymentForm = false;
       this.paymentDate = new Date();
       this.paymentSuccess = true;
+      // this.ticketService.getTicketById().subscribe(ticketId => {
+
+      //   this.router.navigate(['/payment-success'], { state: { ticketId: ticketId } });
+      // });
 
       // if (typeof localStorage !== 'undefined') {
       //   localStorage.setItem('paymentForm', JSON.stringify(paymentData));
