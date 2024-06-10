@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { ITickets } from '../../models/ticket.model';
 import { TicketService } from '../../services/ticket.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaymentSuccessComponent } from '../payment/payment-success/payment-success.component';
 import { FormsModule } from '@angular/forms';
+import { SharedDataService } from '../../shared/sharedDataService.service';
+import { ITrains } from '../../models/train.model';
 
 @Component({
   selector: 'app-cancel-ticket',
@@ -19,11 +21,13 @@ export class CancelTicketComponent {
   ticket: ITickets | null = null;
   errorMessage: string = '';
   paymentDate: Date | null = null;
+  paymentSuccessData: any;
 
   constructor(
     private router: Router,
     private ticketService: TicketService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sharedDataService: SharedDataService
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -31,26 +35,20 @@ export class CancelTicketComponent {
     }
   }
 
-  // ngOnInit(): void {
-  //   // Access the ticket data from router's navigation extras
-  //   // this.ticketId = this.route.snapshot.paramMap.get('ticketId') | '';
-  // }
+  ngOnInit(): void {
+    this.paymentSuccessData = this.sharedDataService.paymentSuccessData;
+    console.log(this.paymentSuccessData);
+  }
   // Inside the searchTicket() method in CancelTicketComponent
   searchTicket() {
     this.ticketService.getTicketById(this.ticketId).subscribe(
       (ticket: ITickets) => {
         this.ticket = ticket;
-        // Check if ticket.date is not null before assigning
-        if (ticket.date) {
-          this.paymentDate = new Date(ticket.date);
-        } else {
-          this.paymentDate = null; // Assign null or handle it differently based on your requirements
-        }
-        this.errorMessage = '';
       },
       (error) => {
         this.ticket = null;
-        this.errorMessage = 'Ticket not found';
+        this.errorMessage =
+          'ბილეთი არ მოიძებნა, გთხოვთ შეამოწმოთ ბილეთის ნომერი';
         console.error('Error fetching ticket:', error);
       }
     );

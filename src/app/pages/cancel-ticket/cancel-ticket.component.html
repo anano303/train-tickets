@@ -5,23 +5,18 @@
     <button (click)="searchTicket()">შემოწმება</button>
   </div> -->
   <form (ngSubmit)="searchTicket()">
-    <label for="ticketId">Enter Ticket ID:</label>
-    <input type="text" id="ticketId" [(ngModel)]="ticketId" name="ticketId" required>
-    <button type="submit">Search Ticket</button>
+
+    <div class="search">
+      <input type="text" id="ticketId" [(ngModel)]="ticketId" placeholder="Enter Ticket ID" name="ticketId" required>
+      <button type="submit"> შემოწმება </button>
+    </div>
+
   </form>
   <div *ngIf="ticket">
-    <app-payment-success    [tickets]="[ticket]"
-
-    [passengerData]="{
-      email: ticket.email,
-      phone: ticket.phone,
-      passengers: []
-    }"
-    [cardOwner]="''"
-    [totalPrice]="ticket.ticketPrice"></app-payment-success>
+    <app-payment-success></app-payment-success>
   </div>
   <div *ngIf="errorMessage" class="error-message">
-    <p>{{ response }}</p>
+    <p>{{ errorMessage }}</p>
   </div>
   <!-- cancel-ticket.component.html -->
   <div *ngIf="response" class="response">

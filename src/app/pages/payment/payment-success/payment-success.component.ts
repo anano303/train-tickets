@@ -11,6 +11,7 @@ import { SelectedTrainComponent } from '../../../shared/selected-train/selected-
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { TrainSelectionService } from '../../../shared/trainSelectionService.service';
+import { SharedDataService } from '../../../shared/sharedDataService.service';
 
 declare var html2pdf: any;
 
@@ -41,7 +42,8 @@ export class PaymentSuccessComponent {
     private ticketService: TicketService,
     private ticketRegistrationService: TicketRegistrationService,
     private router: Router,
-    private trainSelectionService: TrainSelectionService
+    private trainSelectionService: TrainSelectionService,
+    private sharedDataService: SharedDataService
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -78,6 +80,14 @@ export class PaymentSuccessComponent {
   }
 
   submitRegistration(ticketId: string) {
+    this.sharedDataService.paymentSuccessData = {
+      selectedTrain: this.selectedTrain,
+      paymentDate: this.paymentDate,
+      passengerData: this.passengerData,
+      cardOwner: this.cardOwner,
+      totalPrice: this.totalPrice,
+      tickets: this.tickets,
+    };
     if (this.selectedTrain) {
       const registrationData: IRegistration = {
         trainId: this.selectedTrain.id,

@@ -47,3 +47,9 @@
     transform: scale(1.05);
   }
 }
+
+@media screen and (max-width: 720px) {
+  .search-ticket {
+    margin: 50px 5px !important;
+  }
+}
