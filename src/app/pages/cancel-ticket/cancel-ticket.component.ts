@@ -22,7 +22,7 @@ export class CancelTicketComponent {
   ticket: ITickets | null = null;
   errorMessage: string = '';
   paymentDate: Date | null = null;
-  @Input() paymentSuccessData: any = {}; // Initialize to avoid undefined issues
+  paymentSuccessData: any; // Initialize to avoid undefined issues
   selectedTrain: ITrains | null = null;
 
   constructor(

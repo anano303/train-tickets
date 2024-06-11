@@ -1,5 +1,5 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div class="payment-succes">
+<div class="payment-succes" *ngIf="paymentSuccessData">
 
   <h1> გადახდა წარმატებულია </h1>
   <div class="firstDiv">
@@ -14,7 +14,7 @@
           <p *ngIf="!tickets || tickets.length === 0">No tickets available</p>
 
         </div>
-        <p> <span> გადახდის თარიღი:</span> {{ paymentDate | date: 'dd/MM/yyyy' }}</p>
+        <p> <span> გადახდის თარიღი:</span> {{ paymentSuccessData?.paymentDate | date: 'dd/MM/yyyy' }}</p>
       </div>
       <div class="train-info" *ngIf="selectedTrain">
 

@@ -25,14 +25,20 @@ declare var html2pdf: any;
 export class PaymentSuccessComponent {
   @Input() trains: ITrains[] = [];
   @Input() paymentDate!: Date;
-  @Input() passengerData!: any;
+  @Input() passengerData: any = { email: '', phone: '', passengers: [] };
   @Input() cardOwner!: string;
   @Input() totalPrice!: number;
   @Input() tickets: ITickets[] = [];
-  @Input() paymentSuccessData: any;
+  @Input() paymentSuccessData: any = {
+    selectedTrain: null,
+    paymentDate: new Date(),
+    passengerData: { email: '', phone: '', passengers: [] },
+    cardOwner: '',
+    totalPrice: 0,
+    tickets: [],
+  };
 
   selectedTrain: ITrains | null = null;
-  // tickets: ITickets[] = [];
   response: any;
   numberOfPassengers: number = 1;
   formattedDate: string = '';
@@ -74,8 +80,8 @@ export class PaymentSuccessComponent {
     this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
       this.tickets = tickets;
       if (this.tickets.length > 0) {
-        this.ticketId = this.tickets[0].persons[0].ticketId; // Assign the ticket ID
-        this.submitRegistration(this.ticketId); // Pass the ticket ID to submitRegistration
+        this.ticketId = this.tickets[0].persons[0].ticketId;
+        this.submitRegistration(this.ticketId);
       }
     });
   }
@@ -85,6 +91,7 @@ export class PaymentSuccessComponent {
       selectedTrain: this.selectedTrain,
       paymentDate: this.paymentDate,
       passengerData: this.passengerData,
+      email: this.passengerData.email,
       cardOwner: this.cardOwner,
       totalPrice: this.totalPrice,
       tickets: this.tickets,
