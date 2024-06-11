@@ -18,8 +18,8 @@
         <input type="date" name="date" [(ngModel)]="trainsData.date" [min]="minDate" required>
       </div>
       <div class="passenger-number">
-        <input type="number" name="passengers" [(ngModel)]="trainsData.passengers" placeholder="Number of people"
-          required min="1">
+        <input type="number" style="max-width: 100%" name="passengers" [(ngModel)]="trainsData.passengers"
+          placeholder="Number of people" required min="1">
       </div>
       <div class="btn">
         <button type="submit">Find a train</button>

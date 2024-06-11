@@ -1,30 +1,20 @@
 <div class="search-ticket">
   <h1>Search Ticket</h1>
-  <!-- <div class="search">
-    <input [(ngModel)]="ticketId" placeholder="Enter Ticket ID" />
-    <button (click)="searchTicket()">შემოწმება</button>
-  </div> -->
   <form (ngSubmit)="searchTicket()">
-
     <div class="search">
       <input type="text" id="ticketId" [(ngModel)]="ticketId" placeholder="Enter Ticket ID" name="ticketId" required>
-      <button type="submit"> შემოწმება </button>
+      <button type="submit">შემოწმება</button>
     </div>
-
   </form>
   <div *ngIf="ticket">
-    <app-payment-success></app-payment-success>
+    <app-payment-success [paymentSuccessData]="paymentSuccessData"></app-payment-success>
   </div>
   <div *ngIf="errorMessage" class="error-message">
     <p>{{ errorMessage }}</p>
   </div>
-  <!-- cancel-ticket.component.html -->
   <div *ngIf="response" class="response">
     <h1>Ticket Cancellation</h1>
     <p>{{ response }}</p>
   </div>
-  <div *ngIf="!response">
-    <p></p>
-  </div>
-
 </div>
+<router-outlet></router-outlet>

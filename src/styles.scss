@@ -10,7 +10,6 @@ body.en {
 }
 body.ge {
   font-size: small;
-  font-family: "BPG Nino Elite Ultra Caps", sans-serif;
 
   .header {
     .header-left {
@@ -22,5 +21,11 @@ body.ge {
   }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

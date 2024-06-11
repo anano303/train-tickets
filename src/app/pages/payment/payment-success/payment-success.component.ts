@@ -29,6 +29,7 @@ export class PaymentSuccessComponent {
   @Input() cardOwner!: string;
   @Input() totalPrice!: number;
   @Input() tickets: ITickets[] = [];
+  @Input() paymentSuccessData: any;
 
   selectedTrain: ITrains | null = null;
   // tickets: ITickets[] = [];

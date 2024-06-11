@@ -62,18 +62,17 @@
     </div>
     <div class="action-buttons">
       <button mat-raised-button color="primary" (click)="downloadPDF()">
-        <i class="material-icons">picture_as_pdf</i>
-        Download as PDF
+        <i class="material-icons" style="color: blue">picture_as_pdf</i>
+
       </button>
       <button mat-raised-button color="accent" (click)="printPage()">
-        <i class="material-icons">print</i>
-        Print
+        <i class="material-icons" style="color: blue">print</i>
       </button>
     </div>
   </div>
-  <div class="cancelButton">
+  <div class="cancelButton" style="color: white">
     <button mat-raised-button color="warn" (click)="cancelTicket(tickets[0].id)">
-      <i class="material-icons">cancel</i>
+      <i class="material-icons" style="color: white">cancel</i>
       Cancel Ticket
     </button>
   </div>
