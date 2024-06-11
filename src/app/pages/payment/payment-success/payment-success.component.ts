@@ -25,18 +25,11 @@ declare var html2pdf: any;
 export class PaymentSuccessComponent {
   @Input() trains: ITrains[] = [];
   @Input() paymentDate!: Date;
-  @Input() passengerData: any = { email: '', phone: '', passengers: [] };
+  @Input() passengerData!: any;
   @Input() cardOwner!: string;
   @Input() totalPrice!: number;
   @Input() tickets: ITickets[] = [];
-  @Input() paymentSuccessData: any = {
-    selectedTrain: null,
-    paymentDate: new Date(),
-    passengerData: { email: '', phone: '', passengers: [] },
-    cardOwner: '',
-    totalPrice: 0,
-    tickets: [],
-  };
+  @Input() paymentSuccessData: any;
 
   selectedTrain: ITrains | null = null;
   response: any;
