@@ -8,6 +8,7 @@
         <div>
           <p *ngIf="tickets && tickets.length > 0">
             <span>ბილეთის ნომერი:</span> {{ tickets[0].persons[0].ticketId }}
+            {{tickets[0].id}}
 
           </p>
           <p *ngIf="!tickets || tickets.length === 0">No tickets available</p>

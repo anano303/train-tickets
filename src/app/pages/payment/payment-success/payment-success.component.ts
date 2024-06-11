@@ -84,10 +84,13 @@ export class PaymentSuccessComponent {
       selectedTrain: this.selectedTrain,
       paymentDate: this.paymentDate,
       passengerData: this.passengerData,
-      email: this.passengerData.email,
       cardOwner: this.cardOwner,
       totalPrice: this.totalPrice,
       tickets: this.tickets,
+      email: this.passengerData.email,
+      phoneNumber: this.passengerData.phone,
+      people: this.passengerData.passengers,
+      ticketId: ticketId,
     };
     if (this.selectedTrain) {
       const registrationData: IRegistration = {
