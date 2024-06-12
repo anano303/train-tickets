@@ -22,8 +22,11 @@ export class CancelTicketComponent {
   ticket: ITickets | null = null;
   errorMessage: string = '';
   paymentDate: Date | null = null;
-  @Input() paymentSuccessData: any = {};
+  paymentSuccessData: any;
   selectedTrain: ITrains | null = null;
+  passengerData: any = {};
+  cardOwner: string = '';
+  totalPrice!: number;
 
   constructor(
     private router: Router,
@@ -31,12 +34,37 @@ export class CancelTicketComponent {
     private route: ActivatedRoute,
     private sharedDataService: SharedDataService,
     private trainSelectionService: TrainSelectionService
-  ) {}
-
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      const state = navigation.extras.state as { [key: string]: any };
+      this.paymentSuccessData = state['paymentSuccessData'];
+      this.ticketId = state['ticketId'] || null;
+      this.selectedTrain = state['selectedTrain'];
+      this.response = state['response'];
+      this.paymentDate = state['paymentDate'];
+      this.passengerData = state['passengerData'];
+      this.cardOwner = state['cardOwner'];
+      this.totalPrice = state['totalPrice'];
+    } else {
+      // Retrieve data from SharedDataService if no state is passed
+      this.paymentSuccessData = this.sharedDataService.getPaymentSuccessData();
+      this.selectedTrain = this.paymentSuccessData.selectedTrain;
+      this.paymentDate = this.paymentSuccessData.paymentDate;
+      this.passengerData = this.paymentSuccessData.passengerData;
+      this.cardOwner = this.paymentSuccessData.cardOwner;
+      this.totalPrice = this.paymentSuccessData.totalPrice;
+    }
+  }
   ngOnInit(): void {
-    this.paymentSuccessData = this.sharedDataService.paymentSuccessData || {}; // Initialize with default object
-    console.log(this.paymentSuccessData);
-    this.selectedTrain = this.trainSelectionService.getSelectedTrain();
+    if (!this.paymentSuccessData) {
+      this.paymentSuccessData = this.sharedDataService.getPaymentSuccessData();
+      this.selectedTrain = this.paymentSuccessData.selectedTrain;
+      this.paymentDate = this.paymentSuccessData.paymentDate;
+      this.passengerData = this.paymentSuccessData.passengerData;
+      this.cardOwner = this.paymentSuccessData.cardOwner;
+      this.totalPrice = this.paymentSuccessData.totalPrice;
+    }
   }
 
   searchTicket() {
@@ -51,18 +79,14 @@ export class CancelTicketComponent {
         this.paymentSuccessData = {
           ...this.paymentSuccessData,
           ticketId: ticket.id,
-          tickets: [ticket], // Assuming the ticket service returns a single ticket object
+          tickets: [ticket],
           selectedTrain: this.selectedTrain,
-          passengerData: {
-            email: 'test@example.com',
-            phone: '1234567890',
-            passengers: ticket.persons || [], // Assuming `persons` is an array of passengers
-          },
-          cardOwner: 'Card Owner',
-          totalPrice: 100,
-          paymentDate: new Date(),
+          passengerData: this.passengerData,
+          cardOwner: this.cardOwner,
+          totalPrice: this.totalPrice,
+          paymentDate: this.paymentDate,
         };
-        console.log('data', this.paymentSuccessData);
+        console.log('cancelTicket data', this.paymentSuccessData);
       },
       (error) => {
         this.ticket = null;

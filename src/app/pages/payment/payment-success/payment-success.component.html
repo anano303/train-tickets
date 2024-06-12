@@ -1,5 +1,5 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div class="payment-succes">
+<div class="payment-succes" *ngIf="paymentSuccessData">
   <h1> გადახდა წარმატებულია </h1>
   <div class="firstDiv">
     <div class="pdf">
@@ -8,13 +8,12 @@
         <div>
           <p *ngIf="tickets && tickets.length > 0">
             <span>ბილეთის ნომერი:</span> {{ tickets[0].persons[0].ticketId }}
-            {{tickets[0].id}}
 
           </p>
           <p *ngIf="!tickets || tickets.length === 0">No tickets available</p>
 
         </div>
-        <p> <span> გადახდის თარიღი:</span> {{ paymentDate | date: 'dd/MM/yyyy' }}</p>
+        <p> <span> გადახდის თარიღი:</span> {{paymentSuccessData?.paymentDate | date: 'dd/MM/yyyy' }}</p>
       </div>
       <div class="train-info" *ngIf="selectedTrain">
 
@@ -44,13 +43,13 @@
         <!-- <p>ვაგონის N: {{ passenger.vagonId }}</p> -->
       </div>
       <div class="card-owner">
-        <h3>გადამხდელის ინფორმაცია : </h3> <!-- Add Card Owner Information -->
+        <strong>გადამხდელის ინფორმაცია : </strong> <!-- Add Card Owner Information -->
         <p> {{ cardOwner }}</p>
       </div>
       <div>
         <hr>
-        <h3>სულ გადასახდელი</h3> <!-- Add Total Price Information -->
-        <p>{{ totalPrice }}₾</p>
+        <strong>სულ გადასახდელი</strong> <!-- Add Total Price Information -->
+        <p> {{ totalPrice }}₾</p>
       </div>
       <div class="stamp">
         <img src="../../../../assets/stamp.jpg" alt="stamp">

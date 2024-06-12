@@ -7,7 +7,8 @@
     </div>
   </form>
   <div *ngIf="ticket">
-    <app-payment-success [paymentSuccessData]="paymentSuccessData"></app-payment-success>
+    <app-payment-success [cardOwner]="cardOwner" [totalPrice]="totalPrice" [passengerData]="passengerData"
+      [paymentSuccessData]="paymentSuccessData"></app-payment-success>
   </div>
   <div *ngIf="errorMessage" class="error-message">
     <p>{{ errorMessage }}</p>

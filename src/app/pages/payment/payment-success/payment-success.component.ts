@@ -13,7 +13,7 @@ import html2canvas from 'html2canvas';
 import { TrainSelectionService } from '../../../shared/trainSelectionService.service';
 import { SharedDataService } from '../../../shared/sharedDataService.service';
 
-declare var html2pdf: any;
+// declare var html2pdf: any;
 
 @Component({
   selector: 'app-payment-success',
@@ -25,11 +25,18 @@ declare var html2pdf: any;
 export class PaymentSuccessComponent {
   @Input() trains: ITrains[] = [];
   @Input() paymentDate!: Date;
-  @Input() passengerData!: any;
+  @Input() passengerData: any = { email: '', phone: '', passengers: [] };
   @Input() cardOwner!: string;
   @Input() totalPrice!: number;
   @Input() tickets: ITickets[] = [];
-  @Input() paymentSuccessData: any;
+  @Input() paymentSuccessData: any = {
+    selectedTrain: null,
+    paymentDate: new Date(),
+    passengerData: { email: '', phone: '', passengers: [] },
+    cardOwner: '',
+    totalPrice: 0,
+    tickets: [],
+  };
 
   selectedTrain: ITrains | null = null;
   response: any;
@@ -58,6 +65,7 @@ export class PaymentSuccessComponent {
       this.cardOwner = state['cardOwner'];
       this.totalPrice = state['totalPrice'];
       this.numberOfPassengers = state['numberOfPassengers'] || 1;
+      this.paymentSuccessData = state['paymentSuccessData'];
       console.log('State:', state);
     }
 
@@ -67,7 +75,9 @@ export class PaymentSuccessComponent {
     this.fetchTickets();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sharedDataService.setPaymentSuccessData(this.paymentSuccessData);
+  }
 
   fetchTickets() {
     this.ticketService.getTickets().subscribe((tickets: ITickets[]) => {
