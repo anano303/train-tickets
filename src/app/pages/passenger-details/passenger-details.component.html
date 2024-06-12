@@ -71,7 +71,7 @@
         <h2>აირჩიეთ ადგილი</h2>
         <div class="seats-container">
           <div class="seat" *ngFor="let seat of seats" [class.occupied]="seat.isOccupied" (click)="selectSeat(seat)">
-            {{ seat.number }} {{seat.seatId}}
+            {{ seat.number }}
           </div>
         </div>
       </div>
