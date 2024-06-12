@@ -2,41 +2,44 @@
   min-height: 90vh;
   padding: 20px 20px;
   color: #1b1b53;
-  overflow-x: scroll;
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
 
-  table {
-    // width: 100%;
-    border-collapse: collapse;
-  }
+  .table {
+    overflow-x: scroll;
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-  th,
-  td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: left;
-  }
+    table {
+      // width: 100%;
+      border-collapse: collapse;
+    }
 
-  th {
-    background-color: #b3c9f0;
-  }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
 
-  .book-button {
-    background-color: #12074f;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+    th {
+      background-color: #b3c9f0;
+    }
 
-    &:hover {
-      background-color: #1d1470;
+    .book-button {
+      background-color: #12074f;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #1d1470;
+      }
     }
   }
 }

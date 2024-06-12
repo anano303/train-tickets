@@ -7,7 +7,7 @@
     <form [formGroup]="passengerForm" (ngSubmit)="submitForm()">
       <h2>საკონტაქტო ინფორმაცია</h2>
       <div class="contact"
-        style="display: flex; justify-content: space-between; margin-top: 50px; margin-bottom: 50px;">
+        style="display: flex; justify-content: space-between; gap:5px; margin-top: 50px; margin-bottom: 50px;">
         <div>
           <label for="email"></label>
           <input type="text" formControlName="email" id="email" required placeholder="იმეილი" />
@@ -50,9 +50,9 @@
           </div>
         </div>
       </div>
-      <!-- <button type="submit">Submit</button> -->
+
     </form>
-    <div *ngIf="!selectedTrain">
+    <div *ngIf="!selectedTrain" style="color: red">
       <p>No train selected. Please go back and select a train.</p>
     </div>
     <!-- Class selection modal -->
@@ -71,7 +71,7 @@
         <h2>აირჩიეთ ადგილი</h2>
         <div class="seats-container">
           <div class="seat" *ngFor="let seat of seats" [class.occupied]="seat.isOccupied" (click)="selectSeat(seat)">
-            {{ seat.number }}
+            {{ seat.number }} {{seat.seatId}}
           </div>
         </div>
       </div>
